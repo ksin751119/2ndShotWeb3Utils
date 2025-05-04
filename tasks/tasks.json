@@ -242,7 +242,7 @@
       "id": 7,
       "title": "Address Tools Implementation",
       "description": "Develop Ethereum address utilities",
-      "status": "pending",
+      "status": "done",
       "dependencies": [
         3
       ],
@@ -256,7 +256,7 @@
           "description": "Create a utility function that formats Ethereum addresses with proper EIP-55 checksum",
           "dependencies": [],
           "details": "Implementation steps:\n1. Create a new file `addressFormatter.js` in the utilities folder\n2. Implement a function `formatChecksumAddress(address)` that:\n   - Validates the input is a valid Ethereum address (40 hex chars)\n   - Converts the address to lowercase and removes '0x' prefix\n   - Calculates the keccak256 hash of the lowercase address\n   - Applies proper capitalization based on the hash values\n   - Returns the formatted address with '0x' prefix\n3. Add input validation with clear error messages\n4. Add a simple UI component with an input field and format button\n5. Include a copy-to-clipboard button for the formatted address\n\nTesting approach:\n- Test with various valid and invalid addresses\n- Verify output against known checksum addresses\n- Test edge cases like all zeros, mixed case inputs",
-          "status": "pending",
+          "status": "done",
           "parentTaskId": 7
         },
         {
@@ -267,7 +267,7 @@
             1
           ],
           "details": "Implementation steps:\n1. Create a new file `publicKeyConverter.js` in the utilities folder\n2. Import ethers.js cryptographic functions\n3. Implement a function `publicKeyToAddress(publicKey)` that:\n   - Validates the input is a valid public key\n   - Removes '0x' prefix and any compression indicators if present\n   - Applies keccak256 hash to the public key\n   - Takes the last 20 bytes of the hash result\n   - Uses the checksum formatter from subtask 1 to format the result\n4. Create a UI component with public key input field and convert button\n5. Display the resulting address with proper checksum formatting\n6. Add a copy button for the generated address\n\nTesting approach:\n- Test with known public key/address pairs\n- Test with compressed and uncompressed public key formats\n- Verify error handling for invalid inputs",
-          "status": "pending",
+          "status": "done",
           "parentTaskId": 7
         },
         {
@@ -279,7 +279,7 @@
             2
           ],
           "details": "Implementation steps:\n1. Create a new file `addressGenerator.js` in the utilities folder\n2. Implement a function `generateKeyPair()` that:\n   - Securely generates a random private key using ethers.js\n   - Derives the public key from the private key\n   - Uses the converter from subtask 2 to get the address\n   - Returns an object with private key, public key, and address\n3. Create a UI component with a generate button and result display\n4. Implement proper security warnings:\n   - Add clear warning about private key security\n   - Include notice about browser-based generation risks\n   - Recommend offline usage for sensitive operations\n5. Add copy buttons for private key, public key, and address\n6. Include an option to hide/show the private key\n7. Add a clear/reset button to remove sensitive data from screen\n\nTesting approach:\n- Verify that generated addresses match their private keys\n- Test the copy functionality for all fields\n- Ensure security warnings are prominently displayed\n- Verify that the UI properly hides sensitive information when requested",
-          "status": "pending",
+          "status": "done",
           "parentTaskId": 7
         }
       ]

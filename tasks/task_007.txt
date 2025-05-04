@@ -1,6 +1,6 @@
 # Task ID: 7
 # Title: Address Tools Implementation
-# Status: pending
+# Status: done
 # Dependencies: 3
 # Priority: medium
 # Description: Develop Ethereum address utilities
@@ -11,7 +11,7 @@ Implement Address Checksum Formatter to format Ethereum addresses with proper ch
 Verify checksum formatting against known examples. Test public key conversion with test vectors. Verify generated addresses follow Ethereum standards. Test error handling for invalid inputs.
 
 # Subtasks:
-## 1. Implement Address Checksum Formatter [pending]
+## 1. Implement Address Checksum Formatter [done]
 ### Dependencies: None
 ### Description: Create a utility function that formats Ethereum addresses with proper EIP-55 checksum
 ### Details:
@@ -32,7 +32,7 @@ Testing approach:
 - Verify output against known checksum addresses
 - Test edge cases like all zeros, mixed case inputs
 
-## 2. Develop Public Key to Address Converter [pending]
+## 2. Develop Public Key to Address Converter [done]
 ### Dependencies: 7.1
 ### Description: Create a utility that converts Ethereum public keys to corresponding addresses
 ### Details:
@@ -54,7 +54,7 @@ Testing approach:
 - Test with compressed and uncompressed public key formats
 - Verify error handling for invalid inputs
 
-## 3. Create Ethereum Address Generator with Security Features [pending]
+## 3. Create Ethereum Address Generator with Security Features [done]
 ### Dependencies: 7.1, 7.2
 ### Description: Develop a secure tool for generating Ethereum private keys and corresponding addresses
 ### Details:

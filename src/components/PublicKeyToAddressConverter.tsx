@@ -1,11 +1,10 @@
 import React, { useState, useCallback } from 'react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from './ui/card';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { Button } from './ui/button';
+import Card from './Card';
+import Input from './Input';
+import Button from './Button';
 import CopyButton from './CopyButton';
-import { Alert, AlertDescription } from './ui/alert';
 import { publicKeyToAddress } from '../utils/addressUtils';
+import '../styles/tools.css';
 
 export const PublicKeyToAddressConverter: React.FC = () => {
   const [publicKey, setPublicKey] = useState<string>('');
@@ -30,43 +29,33 @@ export const PublicKeyToAddressConverter: React.FC = () => {
   }, []);
 
   return (
-    <Card className="mt-6"> {/* Add margin top for spacing */}
-      <CardHeader>
-        <CardTitle>公鑰到地址轉換器</CardTitle>
-        <CardDescription>從以太坊公鑰計算出對應的地址。</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="input-public-key">輸入公鑰</Label>
-          <Input
-            id="input-public-key"
-            placeholder="0x... (壓縮或非壓縮格式)"
-            value={publicKey}
-            onChange={handleInputChange}
-            className={error ? 'border-red-500' : ''}
-          />
-        </div>
+    <Card>
+      <h2>公鑰到地址轉換器</h2>
+      <p>從以太坊公鑰計算出對應的地址。</p>
 
-        <Button onClick={handleConvert} disabled={!publicKey}>計算地址</Button>
+      <div className="form-group">
+        <label htmlFor="input-public-key">輸入公鑰</label>
+        <Input
+          id="input-public-key"
+          placeholder="0x... (壓縮或非壓縮格式)"
+          value={publicKey}
+          onChange={handleInputChange}
+          error={!!error}
+          helperText={error}
+        />
+      </div>
 
-        {error && (
-          <Alert variant="destructive">
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
-        )}
+      <Button onClick={handleConvert} disabled={!publicKey}>計算地址</Button>
 
-        {derivedAddress && (
-          <div className="space-y-2">
-            <Label>計算出的地址 (EIP-55)</Label>
-            <div className="flex items-center space-x-2 p-2 border rounded bg-muted">
-              <p className="font-mono text-sm break-all flex-grow">{derivedAddress}</p>
-              <CopyButton text={derivedAddress} variant="secondary">
-                複製
-              </CopyButton>
-            </div>
-          </div>
-        )}
-      </CardContent>
+      {derivedAddress && (
+         <div className="result-container">
+           <label>計算出的地址 (EIP-55)</label>
+           <div className="flex items-center space-x-2 mt-1">
+             <p className="font-mono text-sm break-all flex-grow bg-gray-100 p-2 rounded">{derivedAddress}</p>
+             <CopyButton text={derivedAddress}>複製</CopyButton>
+           </div>
+         </div>
+      )}
     </Card>
   );
 };
