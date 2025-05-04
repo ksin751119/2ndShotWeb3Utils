@@ -2,6 +2,11 @@
 
 A frontend application containing various helper tools commonly used in Web3 development.
 
+## Live Demo
+
+You can access a live version of the toolbox here:
+[https://gijera-cemuwa.zeabur.app/](https://gijera-cemuwa.zeabur.app/)
+
 ## Features
 
 The toolbox currently includes the following categories:
