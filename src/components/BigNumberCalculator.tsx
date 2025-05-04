@@ -6,6 +6,7 @@ import CopyButton from './CopyButton';
 import { evaluateExpression } from '../utils/bigNumberCalculator';
 import '../styles/tools.css';
 import { Alert, AlertDescription } from './ui/alert';
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from './ui/tooltip';
 
 const BigNumberCalculator: React.FC = () => {
   const [expression, setExpression] = useState<string>('');
@@ -63,16 +64,34 @@ const BigNumberCalculator: React.FC = () => {
       )}
 
       <div className="form-group mt-4">
-        <ConvertButton onConvert={handleCalculate} disabled={!expression || !!error}>
-          計算
-        </ConvertButton>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <ConvertButton onConvert={handleCalculate} disabled={!expression || !!error}>
+                計算
+              </ConvertButton>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>評估輸入的數學表達式</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
 
       {result && !error && (
         <div className="result-container mt-4">
           <h3>計算結果：</h3>
           <div className="result-value">{result}</div>
-          <CopyButton text={result}>複製結果</CopyButton>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <CopyButton text={result}>複製結果</CopyButton>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>將計算結果複製到剪貼簿</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       )}
     </Card>

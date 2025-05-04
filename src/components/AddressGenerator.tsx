@@ -8,6 +8,7 @@ import { generateEthereumKeyPair } from '../utils/addressUtils';
 import { Eye, EyeOff, AlertTriangle, Trash2 } from 'lucide-react';
 import '../styles/tools.css';
 import { Alert, AlertDescription } from './ui/alert';
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from './ui/tooltip';
 
 interface KeyPair {
   privateKey: string;
@@ -61,11 +62,25 @@ export const AddressGenerator: React.FC = () => {
       </div>
 
       <div className="button-row mb-4">
-          <Button onClick={handleGenerate}>生成新金鑰對</Button>
+          <TooltipProvider>
+              <Tooltip>
+                  <TooltipTrigger asChild>
+                      <Button onClick={handleGenerate}>生成新金鑰對</Button>
+                  </TooltipTrigger>
+                  <TooltipContent><p>生成一個全新的隨機以太坊金鑰對</p></TooltipContent>
+              </Tooltip>
+          </TooltipProvider>
           {keyPair && (
-              <Button variant="secondary" onClick={handleClear}>
-                  <Trash2 className="mr-2 h-4 w-4" /> 清除
-              </Button>
+              <TooltipProvider>
+                  <Tooltip>
+                      <TooltipTrigger asChild>
+                          <Button variant="secondary" onClick={handleClear}>
+                              <Trash2 className="mr-2 h-4 w-4" /> 清除
+                          </Button>
+                      </TooltipTrigger>
+                      <TooltipContent><p>清除當前顯示的金鑰對</p></TooltipContent>
+                  </Tooltip>
+              </TooltipProvider>
           )}
       </div>
 
@@ -88,10 +103,24 @@ export const AddressGenerator: React.FC = () => {
                   onChange={() => {}}
                   className="font-mono flex-grow"
               />
-              <Button variant="secondary" onClick={() => setShowPrivateKey(!showPrivateKey)}>
-                  {showPrivateKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-              </Button>
-              <CopyButton text={keyPair.privateKey}>複製</CopyButton>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                     <Button variant="secondary" onClick={() => setShowPrivateKey(!showPrivateKey)}>
+                       {showPrivateKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                     </Button>
+                  </TooltipTrigger>
+                  <TooltipContent><p>{showPrivateKey ? '隱藏' : '顯示'}私鑰</p></TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                     <CopyButton text={keyPair.privateKey}>複製</CopyButton>
+                  </TooltipTrigger>
+                  <TooltipContent><p>複製私鑰 (請謹慎操作！)</p></TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
             <div className="flex items-center space-x-2 mt-2">
                  <Checkbox
@@ -115,7 +144,14 @@ export const AddressGenerator: React.FC = () => {
                     onChange={() => {}}
                     className="font-mono flex-grow"
                 />
-                <CopyButton text={keyPair.publicKey}>複製</CopyButton>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <CopyButton text={keyPair.publicKey}>複製</CopyButton>
+                    </TooltipTrigger>
+                    <TooltipContent><p>複製公鑰</p></TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
             </div>
           </div>
 
@@ -129,7 +165,14 @@ export const AddressGenerator: React.FC = () => {
                     onChange={() => {}}
                     className="font-mono flex-grow"
                 />
-                <CopyButton text={keyPair.address}>複製</CopyButton>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <CopyButton text={keyPair.address}>複製</CopyButton>
+                    </TooltipTrigger>
+                    <TooltipContent><p>複製以太坊地址</p></TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
              </div>
           </div>
         </div>

@@ -6,6 +6,7 @@ import CopyButton from './CopyButton';
 import { publicKeyToAddress } from '../utils/addressUtils';
 import '../styles/tools.css';
 import { Alert, AlertDescription } from './ui/alert';
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from './ui/tooltip';
 
 export const PublicKeyToAddressConverter: React.FC = () => {
   const [publicKey, setPublicKey] = useState<string>('');
@@ -52,16 +53,34 @@ export const PublicKeyToAddressConverter: React.FC = () => {
       )}
 
       <div className="form-group mt-4">
-          <ConvertButton onConvert={handleConvertAsync} disabled={!publicKey || !!error}>
-              計算地址
-          </ConvertButton>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <ConvertButton onConvert={handleConvertAsync} disabled={!publicKey || !!error}>
+                計算地址
+              </ConvertButton>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>從輸入的公鑰計算出以太坊地址</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
 
       {derivedAddress && !error && (
          <div className="result-container mt-4">
            <h3>計算出的地址 (EIP-55)</h3>
            <div className="result-value">{derivedAddress}</div>
-           <CopyButton text={derivedAddress}>複製</CopyButton>
+           <TooltipProvider>
+             <Tooltip>
+               <TooltipTrigger asChild>
+                 <CopyButton text={derivedAddress}>複製</CopyButton>
+               </TooltipTrigger>
+               <TooltipContent>
+                 <p>複製計算出的地址</p>
+               </TooltipContent>
+             </Tooltip>
+           </TooltipProvider>
          </div>
       )}
     </Card>

@@ -15,6 +15,7 @@ import {
 } from '../utils/baseConverter';
 import '../styles/tools.css';
 import { Alert, AlertDescription } from './ui/alert';
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from './ui/tooltip';
 
 const BaseConverter: React.FC = () => {
   const [hexValue, setHexValue] = useState<string>('');
@@ -138,9 +139,36 @@ const BaseConverter: React.FC = () => {
 
       {!error && (hexValue || decimalValue || binaryValue) && (
         <div className="button-row mt-4">
-          {hexValue && <CopyButton text={hexValue}>複製十六進位</CopyButton>}
-          {decimalValue && <CopyButton text={decimalValue}>複製十進位</CopyButton>}
-          {binaryValue && <CopyButton text={binaryValue}>複製二進位</CopyButton>}
+          {hexValue && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <CopyButton text={hexValue}>複製十六進位</CopyButton>
+                </TooltipTrigger>
+                <TooltipContent><p>複製十六進位值</p></TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
+          {decimalValue && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <CopyButton text={decimalValue}>複製十進位</CopyButton>
+                </TooltipTrigger>
+                <TooltipContent><p>複製十進位值</p></TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
+          {binaryValue && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <CopyButton text={binaryValue}>複製二進位</CopyButton>
+                </TooltipTrigger>
+                <TooltipContent><p>複製二進位值</p></TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
         </div>
       )}
     </Card>

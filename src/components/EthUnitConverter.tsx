@@ -6,6 +6,7 @@ import CopyButton from './CopyButton';
 import { convertUnit, EthUnit, unitDisplayNames, isValidNumber } from '../utils/ethUnitConverter';
 import '../styles/tools.css';
 import { Alert, AlertDescription } from './ui/alert';
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from './ui/tooltip';
 
 const EthUnitConverter: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
@@ -137,7 +138,18 @@ const EthUnitConverter: React.FC = () => {
       )}
 
       <div className="form-group mt-4">
-        <ConvertButton onConvert={handleConvert} disabled={!!error || !inputValue}>轉換</ConvertButton>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <ConvertButton onConvert={handleConvert} disabled={!!error || !inputValue}>
+                轉換
+              </ConvertButton>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>根據選擇的單位轉換輸入的數值</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
 
       {result && !error && (
@@ -146,7 +158,16 @@ const EthUnitConverter: React.FC = () => {
           <div className="result-value">
             {result} {unitDisplayNames[toUnit].split(' ')[0]}
           </div>
-          <CopyButton text={result}>複製結果</CopyButton>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                 <CopyButton text={result}>複製結果</CopyButton>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>將轉換結果複製到剪貼簿</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       )}
     </Card>

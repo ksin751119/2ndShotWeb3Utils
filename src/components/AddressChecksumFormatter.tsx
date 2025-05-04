@@ -11,6 +11,8 @@ import CopyButton from './CopyButton';
 import { formatChecksumAddress } from '../utils/addressUtils';
 import '../styles/tools.css'; // Ensure CSS is imported
 import { Alert, AlertDescription } from './ui/alert'; // Import Alert
+// Import Tooltip components
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from './ui/tooltip';
 
 export const AddressChecksumFormatter: React.FC = () => {
   const [inputAddress, setInputAddress] = useState<string>('');
@@ -62,19 +64,37 @@ export const AddressChecksumFormatter: React.FC = () => {
           </Alert>
       )}
 
-      {/* Use ConvertButton */}
-       <div className="form-group mt-4"> {/* Add margin */}
-           <ConvertButton onConvert={handleFormatAsync} disabled={!inputAddress || !!error}>
-               格式化地址
-           </ConvertButton>
-       </div>
+      {/* Button Group with Tooltip */}
+      <div className="form-group mt-4">
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+               <ConvertButton onConvert={handleFormatAsync} disabled={!inputAddress || !!error}>
+                 格式化地址
+               </ConvertButton>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>將輸入地址轉換為 EIP-55 校驗和格式</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </div>
 
-      {/* Result Display - Use result-container and result-value */}
+      {/* Result Display with Tooltip on Copy Button */}
       {formattedAddress && !error && (
-        <div className="result-container mt-4"> {/* Use class, add margin */}
-           <h3>格式化地址 (EIP-55)</h3> {/* Use H3 */}
-           <div className="result-value">{formattedAddress}</div> {/* Use class */}
-           <CopyButton text={formattedAddress}>複製</CopyButton>
+        <div className="result-container mt-4">
+          <h3>格式化地址 (EIP-55)</h3>
+          <div className="result-value">{formattedAddress}</div>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <CopyButton text={formattedAddress}>複製</CopyButton>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>複製格式化後的地址</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       )}
     </Card>

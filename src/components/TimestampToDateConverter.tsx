@@ -5,6 +5,7 @@ import ConvertButton from './ConvertButton'; // Import ConvertButton
 import CopyButton from './CopyButton';
 import { isValidTimestampString, convertTimestampToTaipeiString } from '../utils/timeConverter';
 import { Alert, AlertDescription } from './ui/alert';
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from './ui/tooltip';
 
 const TimestampToDateConverter: React.FC = () => {
   const [timestampInput, setTimestampInput] = useState<string>('');
@@ -68,24 +69,39 @@ const TimestampToDateConverter: React.FC = () => {
         )}
       </div>
 
-      {/* Button Group - Use ConvertButton */}
+      {/* Button Group with Tooltip */}
       <div className="mt-4">
-        <ConvertButton
-          onConvert={handleTimestampConvertAsync} // Pass the async handler
-          disabled={!timestampInput || !!timestampError}
-        >
-          轉換為台北時間
-        </ConvertButton>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+               <ConvertButton onConvert={handleTimestampConvertAsync} disabled={!timestampInput || !!timestampError}>
+                 轉換為台北時間
+               </ConvertButton>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>將輸入的 Unix 時間戳轉換為台北時區日期</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
 
-      {/* Result Section - Separate group */}
-      {timestampResult && !timestampError && ( // Only show result if no error
+      {/* Result Section with Tooltip on Copy Button */}
+      {timestampResult && !timestampError && (
         <div className="result-container">
           <h3>轉換結果：</h3>
           <div className="result-value">{timestampResult}</div>
-          <CopyButton text={timestampResult}>
-            複製日期
-          </CopyButton>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                 <CopyButton text={timestampResult}>
+                   複製日期
+                 </CopyButton>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>將轉換後的日期複製到剪貼簿</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       )}
     </Card>

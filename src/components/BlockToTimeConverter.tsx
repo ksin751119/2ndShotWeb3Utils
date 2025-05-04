@@ -5,6 +5,7 @@ import ConvertButton from './ConvertButton'; // Import ConvertButton
 import CopyButton from './CopyButton';
 import { isValidBlockNumberString, getBlockTimestamp, convertTimestampToTaipeiString } from '../utils/timeConverter'; // Make sure convertTimestampToTaipeiString is imported
 import { Alert, AlertDescription } from './ui/alert';
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from './ui/tooltip';
 
 const BlockToTimeConverter: React.FC = () => {
   const [blockNumberInput, setBlockNumberInput] = useState<string>('');
@@ -74,36 +75,59 @@ const BlockToTimeConverter: React.FC = () => {
         )}
       </div>
 
-      {/* Button Group - Use ConvertButton */}
+      {/* Button Group with Tooltip */}
       <div className="mt-4">
-        <ConvertButton
-          onConvert={handleBlockNumberConvert}
-          disabled={!blockNumberInput || !!blockError}
-        >
-          獲取區塊時間
-        </ConvertButton>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+               <ConvertButton
+                 onConvert={handleBlockNumberConvert}
+                 disabled={!blockNumberInput || !!blockError}
+               >
+                 獲取區塊時間
+               </ConvertButton>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>查詢輸入區塊編號對應的 Unix 時間戳和日期</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
 
-      {/* Result Section - Separate group */}
-      {(blockResultTimestamp || blockResultDate) && !blockError && ( // Only show results if no error
+      {/* Result Section with Tooltips on Copy Buttons */}
+      {(blockResultTimestamp || blockResultDate) && !blockError && (
             <div className="result-container">
                 <h3>轉換結果：</h3>
                 {blockResultTimestamp && (
                     <div>
                         <span className="text-xs text-muted-foreground">時間戳 (秒):</span>
                         <div className="result-value" style={{marginBottom: '0.5rem'}}>{blockResultTimestamp}</div>
-                        <CopyButton text={blockResultTimestamp} variant="secondary">
-                            複製時間戳
-                        </CopyButton>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <CopyButton text={blockResultTimestamp} variant="secondary">
+                                  複製時間戳
+                              </CopyButton>
+                             </TooltipTrigger>
+                             <TooltipContent><p>複製時間戳 (秒)</p></TooltipContent>
+                           </Tooltip>
+                         </TooltipProvider>
                     </div>
                 )}
                 {blockResultDate && (
                     <div style={{marginTop: blockResultTimestamp ? '1rem' : '0'}}>
                         <span className="text-xs text-muted-foreground">台北日期:</span>
                         <div className="result-value">{blockResultDate}</div>
-                        <CopyButton text={blockResultDate} variant="secondary">
-                            複製日期
-                        </CopyButton>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <CopyButton text={blockResultDate} variant="secondary">
+                                複製日期
+                              </CopyButton>
+                             </TooltipTrigger>
+                             <TooltipContent><p>複製轉換後的日期</p></TooltipContent>
+                           </Tooltip>
+                         </TooltipProvider>
                     </div>
                 )}
             </div>
