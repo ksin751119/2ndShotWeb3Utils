@@ -48,123 +48,132 @@ export const isValidDecimal = (value: string): boolean => {
 /**
  * 將十六進位轉換為十進位
  * @param hexValue 十六進位字串 (可含 0x 前綴)
- * @returns 十進位字串
+ * @returns 十進位字串 或 錯誤訊息字串
  */
 export const hexToDecimal = (hexValue: string): string => {
-  if (!hexValue || hexValue.trim() === '') return '';
-
+  // Assume validation is done by caller
   try {
-    // 處理可能的 0x 前綴
     const cleanHex = hexValue.startsWith('0x') ? hexValue.slice(2) : hexValue;
-
-    if (!isValidHex(cleanHex)) return '無效輸入';
-
-    // 轉換為十進位
     return BigInt(`0x${cleanHex}`).toString(10);
-  } catch (error) {
-    console.error('轉換錯誤:', error);
-    return '轉換錯誤';
+  } catch (error: unknown) {
+    console.error('Hex to Decimal conversion error:', error);
+    if (typeof error === 'object' && error !== null) {
+      const potentialError = error as { code?: string; fault?: string };
+      if (potentialError.code === 'NUMERIC_FAULT' && potentialError.fault === 'overflow') {
+          return `錯誤：數值過大，無法轉換為十進位。`;
+      }
+    }
+    return '錯誤：從十六進位轉換為十進位時發生問題。';
   }
 };
 
 /**
  * 將十六進位轉換為二進位
  * @param hexValue 十六進位字串 (可含 0x 前綴)
- * @returns 二進位字串
+ * @returns 二進位字串 或 錯誤訊息字串
  */
 export const hexToBinary = (hexValue: string): string => {
-  if (!hexValue || hexValue.trim() === '') return '';
-
+  // Assume validation is done by caller
   try {
-    // 先轉換為十進位，再轉為二進位
-    const decimal = hexToDecimal(hexValue);
-    if (decimal === '無效輸入' || decimal === '轉換錯誤') return decimal;
-
-    return BigInt(decimal).toString(2);
-  } catch (error) {
-    console.error('轉換錯誤:', error);
-    return '轉換錯誤';
+    const cleanHex = hexValue.startsWith('0x') ? hexValue.slice(2) : hexValue;
+    return BigInt(`0x${cleanHex}`).toString(2);
+  } catch (error: unknown) {
+    console.error('Hex to Binary conversion error:', error);
+     if (typeof error === 'object' && error !== null) {
+      const potentialError = error as { code?: string; fault?: string };
+      if (potentialError.code === 'NUMERIC_FAULT' && potentialError.fault === 'overflow') {
+          return `錯誤：數值過大，無法轉換為二進位。`;
+      }
+    }
+    return '錯誤：從十六進位轉換為二進位時發生問題。';
   }
 };
 
 /**
  * 將十進位轉換為十六進位
  * @param decimalValue 十進位字串
- * @returns 十六進位字串 (含 0x 前綴)
+ * @returns 十六進位字串 (含 0x 前綴) 或 錯誤訊息字串
  */
 export const decimalToHex = (decimalValue: string): string => {
-  if (!decimalValue || decimalValue.trim() === '') return '';
-
+  // Assume validation is done by caller
   try {
-    if (!isValidDecimal(decimalValue)) return '無效輸入';
-
-    // 轉換為十六進位
     const hex = BigInt(decimalValue).toString(16);
     return `0x${hex}`;
-  } catch (error) {
-    console.error('轉換錯誤:', error);
-    return '轉換錯誤';
+  } catch (error: unknown) {
+    console.error('Decimal to Hex conversion error:', error);
+    if (typeof error === 'object' && error !== null) {
+      const potentialError = error as { code?: string; fault?: string };
+      if (potentialError.code === 'NUMERIC_FAULT' && potentialError.fault === 'overflow') {
+          return `錯誤：數值過大，無法轉換為十六進位。`;
+      }
+    }
+    return '錯誤：從十進位轉換為十六進位時發生問題。';
   }
 };
 
 /**
  * 將十進位轉換為二進位
  * @param decimalValue 十進位字串
- * @returns 二進位字串 (含 0b 前綴)
+ * @returns 二進位字串 (含 0b 前綴) 或 錯誤訊息字串
  */
 export const decimalToBinary = (decimalValue: string): string => {
-  if (!decimalValue || decimalValue.trim() === '') return '';
-
+  // Assume validation is done by caller
   try {
-    if (!isValidDecimal(decimalValue)) return '無效輸入';
-
-    // 轉換為二進位
     const binary = BigInt(decimalValue).toString(2);
     return `0b${binary}`;
-  } catch (error) {
-    console.error('轉換錯誤:', error);
-    return '轉換錯誤';
+  } catch (error: unknown) {
+    console.error('Decimal to Binary conversion error:', error);
+    if (typeof error === 'object' && error !== null) {
+      const potentialError = error as { code?: string; fault?: string };
+      if (potentialError.code === 'NUMERIC_FAULT' && potentialError.fault === 'overflow') {
+          return `錯誤：數值過大，無法轉換為二進位。`;
+      }
+    }
+    return '錯誤：從十進位轉換為二進位時發生問題。';
   }
 };
 
 /**
  * 將二進位轉換為十進位
  * @param binaryValue 二進位字串 (可含 0b 前綴)
- * @returns 十進位字串
+ * @returns 十進位字串 或 錯誤訊息字串
  */
 export const binaryToDecimal = (binaryValue: string): string => {
-  if (!binaryValue || binaryValue.trim() === '') return '';
-
+  // Assume validation is done by caller
   try {
-    // 處理可能的 0b 前綴
     const cleanBinary = binaryValue.startsWith('0b') ? binaryValue.slice(2) : binaryValue;
-
-    if (!isValidBinary(cleanBinary)) return '無效輸入';
-
-    // 轉換為十進位
     return BigInt(`0b${cleanBinary}`).toString(10);
-  } catch (error) {
-    console.error('轉換錯誤:', error);
-    return '轉換錯誤';
+  } catch (error: unknown) {
+    console.error('Binary to Decimal conversion error:', error);
+    if (typeof error === 'object' && error !== null) {
+      const potentialError = error as { code?: string; fault?: string };
+      if (potentialError.code === 'NUMERIC_FAULT' && potentialError.fault === 'overflow') {
+          return `錯誤：數值過大，無法轉換為十進位。`;
+      }
+    }
+    return '錯誤：從二進位轉換為十進位時發生問題。';
   }
 };
 
 /**
  * 將二進位轉換為十六進位
  * @param binaryValue 二進位字串 (可含 0b 前綴)
- * @returns 十六進位字串 (含 0x 前綴)
+ * @returns 十六進位字串 (含 0x 前綴) 或 錯誤訊息字串
  */
 export const binaryToHex = (binaryValue: string): string => {
-  if (!binaryValue || binaryValue.trim() === '') return '';
-
+  // Assume validation is done by caller
   try {
-    // 先轉為十進位，再轉為十六進位
-    const decimal = binaryToDecimal(binaryValue);
-    if (decimal === '無效輸入' || decimal === '轉換錯誤') return decimal;
-
-    return decimalToHex(decimal);
-  } catch (error) {
-    console.error('轉換錯誤:', error);
-    return '轉換錯誤';
+    const cleanBinary = binaryValue.startsWith('0b') ? binaryValue.slice(2) : binaryValue;
+    const hex = BigInt(`0b${cleanBinary}`).toString(16);
+    return `0x${hex}`;
+  } catch (error: unknown) {
+    console.error('Binary to Hex conversion error:', error);
+    if (typeof error === 'object' && error !== null) {
+      const potentialError = error as { code?: string; fault?: string };
+      if (potentialError.code === 'NUMERIC_FAULT' && potentialError.fault === 'overflow') {
+          return `錯誤：數值過大，無法轉換為十六進位。`;
+      }
+    }
+    return '錯誤：從二進位轉換為十六進位時發生問題。';
   }
 };

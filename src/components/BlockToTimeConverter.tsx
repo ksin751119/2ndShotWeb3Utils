@@ -4,7 +4,6 @@ import NumberInput from './NumberInput'; // Import NumberInput
 import ConvertButton from './ConvertButton'; // Import ConvertButton
 import CopyButton from './CopyButton';
 import { isValidBlockNumberString, getBlockTimestamp, convertTimestampToTaipeiString } from '../utils/timeConverter'; // Make sure convertTimestampToTaipeiString is imported
-import { Label } from './ui/label';
 import { Alert, AlertDescription } from './ui/alert';
 
 const BlockToTimeConverter: React.FC = () => {
@@ -12,7 +11,6 @@ const BlockToTimeConverter: React.FC = () => {
   const [blockResultTimestamp, setBlockResultTimestamp] = useState<string>('');
   const [blockResultDate, setBlockResultDate] = useState<string>('');
   const [blockError, setBlockError] = useState<string>('');
-  const [blockLoading, setBlockLoading] = useState<boolean>(false);
 
   const handleBlockNumberInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -33,7 +31,6 @@ const BlockToTimeConverter: React.FC = () => {
       return;
     }
 
-    setBlockLoading(true);
     setBlockError('');
     setBlockResultTimestamp('');
     setBlockResultDate('');
@@ -55,8 +52,6 @@ const BlockToTimeConverter: React.FC = () => {
     } else {
         setBlockError('錯誤：獲取區塊時間戳時返回未知的結果類型');
     }
-
-    setBlockLoading(false);
   }, [blockNumberInput]);
 
   return (
@@ -64,7 +59,7 @@ const BlockToTimeConverter: React.FC = () => {
       <h2>區塊編號 ➔ 時間戳 & 台北日期</h2>
       {/* Input Group */}
       <div className="space-y-2 mt-4">
-        <Label htmlFor="block-number-input">輸入區塊編號</Label>
+        <label htmlFor="block-number-input">輸入區塊編號</label>
         <NumberInput
           id="block-number-input"
           placeholder="例如: 18000000"
@@ -82,36 +77,35 @@ const BlockToTimeConverter: React.FC = () => {
       {/* Button Group - Use ConvertButton */}
       <div className="mt-4">
         <ConvertButton
-          onConvert={handleBlockNumberConvert} // Pass the existing async handler
-          disabled={!blockNumberInput || blockLoading || !!blockError}
+          onConvert={handleBlockNumberConvert}
+          disabled={!blockNumberInput || !!blockError}
         >
-          {/* Original Button content might need slight adjustment if ConvertButton doesn't handle loading icon internally */}
-          {/* Assuming ConvertButton handles loading state internally based on its code */}
           獲取區塊時間
         </ConvertButton>
       </div>
 
       {/* Result Section - Separate group */}
       {(blockResultTimestamp || blockResultDate) && !blockError && ( // Only show results if no error
-            <div className="mt-4 p-2 border rounded bg-muted space-y-1"> {/* Add margin-top */}
+            <div className="result-container">
+                <h3>轉換結果：</h3>
                 {blockResultTimestamp && (
                     <div>
                         <span className="text-xs text-muted-foreground">時間戳 (秒):</span>
-                        <p className="font-mono text-sm break-all">{blockResultTimestamp}</p>
+                        <div className="result-value" style={{marginBottom: '0.5rem'}}>{blockResultTimestamp}</div>
                         <CopyButton text={blockResultTimestamp} variant="secondary">
                             複製時間戳
                         </CopyButton>
                     </div>
                 )}
-                  {blockResultDate && (
-                      <div>
-                          <span className="text-xs text-muted-foreground">台北日期:</span>
-                          <p className="font-mono text-sm break-all">{blockResultDate}</p>
-                          <CopyButton text={blockResultDate} variant="secondary">
+                {blockResultDate && (
+                    <div style={{marginTop: blockResultTimestamp ? '1rem' : '0'}}>
+                        <span className="text-xs text-muted-foreground">台北日期:</span>
+                        <div className="result-value">{blockResultDate}</div>
+                        <CopyButton text={blockResultDate} variant="secondary">
                             複製日期
                         </CopyButton>
-                      </div>
-                  )}
+                    </div>
+                )}
             </div>
       )}
     </Card>

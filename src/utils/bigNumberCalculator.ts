@@ -72,7 +72,7 @@ export const evaluateExpression = (expression: string): string => {
 
     // 檢查結果是否在 uint256 範圍內
     if (!isWithinUint256Range(result)) {
-      return '結果超出 uint256 範圍';
+      return '錯誤：結果超出 uint256 範圍';
     }
 
     // 格式化結果為整數字串
@@ -83,19 +83,19 @@ export const evaluateExpression = (expression: string): string => {
     if (error instanceof Error) {
       // 提供更友好的錯誤訊息
       if (error.message.includes('Invalid number')) {
-          return '表達式包含無效的數字格式';
+          return '錯誤：表達式包含無效的數字格式';
       }
       if (error.message.includes('Unexpected end of expression') || error.message.includes('Invalid expression')) {
-          return '表達式語法錯誤';
+          return '錯誤：表達式語法錯誤';
       }
        if (error.message.includes('Undefined symbol')) {
-          return `表達式包含無法識別的符號: ${error.message.split(':')[1]?.trim()}`;
+          return `錯誤：表達式包含無法識別的符號: ${error.message.split(':')[1]?.trim()}`;
        }
        if (error.message.includes('Division by zero')) {
           return '錯誤：除數不能為零';
        }
-       return `計算錯誤: ${error.message}`;
+       return `錯誤：計算時發生問題 (${error.message})`;
     }
-    return '計算錯誤';
+    return '錯誤：計算時發生未知問題';
   }
 };

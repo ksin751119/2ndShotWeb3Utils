@@ -14,79 +14,87 @@ import {
   binaryToHex
 } from '../utils/baseConverter';
 import '../styles/tools.css';
+import { Alert, AlertDescription } from './ui/alert';
 
 const BaseConverter: React.FC = () => {
   const [hexValue, setHexValue] = useState<string>('');
   const [decimalValue, setDecimalValue] = useState<string>('');
   const [binaryValue, setBinaryValue] = useState<string>('');
 
-  const [hexError, setHexError] = useState<boolean>(false);
-  const [decimalError, setDecimalError] = useState<boolean>(false);
-  const [binaryError, setBinaryError] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
 
-  // 處理十六進位輸入變更
+  const updateOtherFields = (setter: React.Dispatch<React.SetStateAction<string>>, result: string) => {
+    if (result.startsWith('錯誤：')) {
+      setError(result);
+      setter('');
+    } else {
+      setter(result);
+    }
+  };
+
   const handleHexChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setHexValue(value);
+    setDecimalValue('');
+    setBinaryValue('');
+    setError('');
 
     if (value && !isValidHex(value)) {
-      setHexError(true);
+      setError('錯誤：請輸入有效的十六進位數值 (0-9, A-F/a-f, 可選 0x 前綴)。');
       return;
     }
 
-    setHexError(false);
     if (value) {
-      // 更新其他欄位
-      setDecimalValue(hexToDecimal(value));
-      setBinaryValue(hexToBinary(value));
-    } else {
-      // 如果輸入為空，清空其他欄位
-      setDecimalValue('');
-      setBinaryValue('');
+      const decimalResult = hexToDecimal(value);
+      updateOtherFields(setDecimalValue, decimalResult);
+      if (!decimalResult.startsWith('錯誤：')) {
+        const binaryResult = hexToBinary(value);
+        updateOtherFields(setBinaryValue, binaryResult);
+      }
     }
   };
 
-  // 處理十進位輸入變更
   const handleDecimalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setDecimalValue(value);
+    setHexValue('');
+    setBinaryValue('');
+    setError('');
 
     if (value && !isValidDecimal(value)) {
-      setDecimalError(true);
+      setError('錯誤：請輸入有效的十進位數值 (0-9)。');
       return;
     }
 
-    setDecimalError(false);
     if (value) {
-      // 更新其他欄位
-      setHexValue(decimalToHex(value));
-      setBinaryValue(decimalToBinary(value));
-    } else {
-      // 如果輸入為空，清空其他欄位
-      setHexValue('');
-      setBinaryValue('');
+      const hexResult = decimalToHex(value);
+      updateOtherFields(setHexValue, hexResult);
+      if (!hexResult.startsWith('錯誤：')) {
+        const binaryResult = decimalToBinary(value);
+        updateOtherFields(setBinaryValue, binaryResult);
+      }
     }
   };
 
-  // 處理二進位輸入變更
   const handleBinaryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setBinaryValue(value);
+    setHexValue('');
+    setDecimalValue('');
+    setError('');
 
     if (value && !isValidBinary(value)) {
-      setBinaryError(true);
+      setError('錯誤：請輸入有效的二進位數值 (0-1, 可選 0b 前綴)。');
       return;
     }
 
-    setBinaryError(false);
     if (value) {
-      // 更新其他欄位
-      setHexValue(binaryToHex(value));
-      setDecimalValue(binaryToDecimal(value));
-    } else {
-      // 如果輸入為空，清空其他欄位
-      setHexValue('');
-      setDecimalValue('');
+      const decimalResult = binaryToDecimal(value);
+      updateOtherFields(setDecimalValue, decimalResult);
+      if (!decimalResult.startsWith('錯誤：')) {
+        const hexResult = binaryToHex(value);
+        updateOtherFields(setHexValue, hexResult);
+      }
     }
   };
 
@@ -95,44 +103,46 @@ const BaseConverter: React.FC = () => {
       <h2>進制轉換器</h2>
       <p>在下方輸入框中輸入數值以自動轉換為其他進制</p>
 
-      <div className="form-group">
+      <div className="form-group mt-4">
         <label>十六進位 (Hex)：</label>
         <Input
           value={hexValue}
           onChange={handleHexChange}
           placeholder="例如：0x1a 或 1a"
-          error={hexError}
-          helperText={hexError ? '請輸入有效的十六進位數值' : ''}
         />
       </div>
 
-      <div className="form-group">
+      <div className="form-group mt-4">
         <label>十進位 (Decimal)：</label>
         <Input
           value={decimalValue}
           onChange={handleDecimalChange}
           placeholder="例如：42"
-          error={decimalError}
-          helperText={decimalError ? '請輸入有效的十進位數值' : ''}
         />
       </div>
 
-      <div className="form-group">
+      <div className="form-group mt-4">
         <label>二進位 (Binary)：</label>
         <Input
           value={binaryValue}
           onChange={handleBinaryChange}
           placeholder="例如：0b101010 或 101010"
-          error={binaryError}
-          helperText={binaryError ? '請輸入有效的二進位數值' : ''}
         />
       </div>
 
-      <div className="button-row">
-        {hexValue && <CopyButton text={hexValue}>複製十六進位</CopyButton>}
-        {decimalValue && <CopyButton text={decimalValue}>複製十進位</CopyButton>}
-        {binaryValue && <CopyButton text={binaryValue}>複製二進位</CopyButton>}
-      </div>
+      {error && (
+        <Alert variant="destructive" className="mt-4">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+
+      {!error && (hexValue || decimalValue || binaryValue) && (
+        <div className="button-row mt-4">
+          {hexValue && <CopyButton text={hexValue}>複製十六進位</CopyButton>}
+          {decimalValue && <CopyButton text={decimalValue}>複製十進位</CopyButton>}
+          {binaryValue && <CopyButton text={binaryValue}>複製二進位</CopyButton>}
+        </div>
+      )}
     </Card>
   );
 };

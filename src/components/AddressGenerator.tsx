@@ -7,6 +7,7 @@ import { Checkbox } from './ui/checkbox';
 import { generateEthereumKeyPair } from '../utils/addressUtils';
 import { Eye, EyeOff, AlertTriangle, Trash2 } from 'lucide-react';
 import '../styles/tools.css';
+import { Alert, AlertDescription } from './ui/alert';
 
 interface KeyPair {
   privateKey: string;
@@ -21,17 +22,20 @@ export const AddressGenerator: React.FC = () => {
 
   const handleGenerate = useCallback(() => {
     setError('');
+    setKeyPair(null);
     try {
       const newKeyPair = generateEthereumKeyPair();
       setKeyPair(newKeyPair);
       setShowPrivateKey(false);
     } catch (err: unknown) {
+        let errorMessage = '錯誤：生成金鑰對時發生未知問題。';
         if (err instanceof Error) {
-            setError(err.message);
-        } else {
-            setError('生成金鑰對時發生未知錯誤。');
+            errorMessage = `錯誤：${err.message}`;
+        } else if (typeof err === 'string') {
+            errorMessage = `錯誤：${err}`;
         }
-       setKeyPair(null);
+        setError(errorMessage);
+        setKeyPair(null);
     }
   }, []);
 
@@ -66,7 +70,9 @@ export const AddressGenerator: React.FC = () => {
       </div>
 
       {error && (
-          <p className="error-text mb-4">{error}</p>
+          <Alert variant="destructive" className="mb-4">
+              <AlertDescription>{error}</AlertDescription>
+          </Alert>
       )}
 
       {keyPair && (

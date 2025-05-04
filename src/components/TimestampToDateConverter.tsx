@@ -4,7 +4,6 @@ import NumberInput from './NumberInput'; // Import NumberInput
 import ConvertButton from './ConvertButton'; // Import ConvertButton
 import CopyButton from './CopyButton';
 import { isValidTimestampString, convertTimestampToTaipeiString } from '../utils/timeConverter';
-import { Label } from './ui/label';
 import { Alert, AlertDescription } from './ui/alert';
 
 const TimestampToDateConverter: React.FC = () => {
@@ -54,7 +53,7 @@ const TimestampToDateConverter: React.FC = () => {
       <h2>Unix 時間戳 ➔ 台北日期</h2>
       {/* Input Group */}
       <div className="space-y-2 mt-4">
-        <Label htmlFor="timestamp-input">輸入 Unix 時間戳 (秒或毫秒)</Label>
+        <label htmlFor="timestamp-input">輸入 Unix 時間戳 (秒或毫秒)</label>
         <NumberInput
           id="timestamp-input"
           placeholder="例如: 1678886400 或 1678886400000"
@@ -81,8 +80,9 @@ const TimestampToDateConverter: React.FC = () => {
 
       {/* Result Section - Separate group */}
       {timestampResult && !timestampError && ( // Only show result if no error
-        <div className="mt-4 p-2 border rounded bg-muted"> {/* Add margin-top */}
-          <p className="font-mono text-sm break-all">{timestampResult}</p>
+        <div className="result-container">
+          <h3>轉換結果：</h3>
+          <div className="result-value">{timestampResult}</div>
           <CopyButton text={timestampResult}>
             複製日期
           </CopyButton>

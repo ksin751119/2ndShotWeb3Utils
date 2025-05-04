@@ -1,46 +1,51 @@
 import React, { useState } from 'react';
+import { toast } from 'sonner'; // Import toast function
 import Button, { ButtonProps } from './Button';
 
 interface CopyButtonProps extends Omit<ButtonProps, 'onClick'> {
   text: string; // 要複製的內容
-  successText?: string;
-  errorText?: string;
+  // Remove successText and errorText as we now use toasts
 }
 
 const CopyButton: React.FC<CopyButtonProps> = ({
   text,
   children,
-  successText = '✔️ 已複製',
-  errorText = '❌ 複製失敗',
   disabled,
   ...rest
 }) => {
-  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [isCopied, setIsCopied] = useState<boolean>(false); // Simpler state to prevent rapid re-clicks
 
   const handleCopy = async () => {
+    if (isCopied) return; // Prevent action if already recently copied
+
     try {
       await navigator.clipboard.writeText(text);
-      setStatus('success');
-      setTimeout(() => setStatus('idle'), 1200);
-    } catch {
-      setStatus('error');
-      setTimeout(() => setStatus('idle'), 1200);
+      toast.success('已成功複製到剪貼簿！'); // Show success toast
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 1500); // Reset state after 1.5s
+    } catch (err) {
+      console.error('複製失敗:', err);
+      toast.error('複製到剪貼簿失敗！'); // Show error toast
+      setIsCopied(false); // Ensure state is reset on error
     }
   };
 
-  let displayText = children;
-  if (status === 'success') displayText = successText;
-  if (status === 'error') displayText = errorText;
+  // Keep original children, no text/icon changes needed
+  // const displayText = children;
+  // if (status === 'success') displayText = successText;
+  // if (status === 'error') displayText = errorText;
 
   return (
     <Button
       {...rest}
       onClick={handleCopy}
-      disabled={Boolean(disabled) || status === 'success'}
+      // Disable briefly after successful copy
+      disabled={Boolean(disabled) || isCopied}
       variant="secondary"
-      icon={status === 'success' ? '✔️' : status === 'error' ? '❌' : (rest.icon !== undefined && rest.icon !== null ? rest.icon : '📋')}
+      // Use default icon or passed icon, don't change based on status
+      icon={rest.icon !== undefined && rest.icon !== null ? rest.icon : '📋'}
     >
-      {displayText}
+      {children}
     </Button>
   );
 };

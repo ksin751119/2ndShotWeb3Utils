@@ -9,6 +9,7 @@ import NotFound from './pages/NotFound';
 import FormDemo from './pages/FormDemo';
 import ButtonDemo from './pages/ButtonDemo';
 import ToastDemo from './pages/ToastDemo';
+import { Toaster } from 'sonner';
 
 function App(): React.ReactElement {
   return (
@@ -25,6 +26,7 @@ function App(): React.ReactElement {
           <Route path="/toast-demo" element={<ToastDemo />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <Toaster richColors position="bottom-right" />
       </Layout>
     </BrowserRouter>
   );

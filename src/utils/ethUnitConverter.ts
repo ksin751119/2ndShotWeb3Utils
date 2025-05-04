@@ -34,18 +34,41 @@ export const convertUnit = (
   try {
     // 處理空輸入
     if (!value || value.trim() === '') {
-      return '';
+      return ''; // Return empty for empty input, not an error
+    }
+
+    // 可以在這裡添加一次 isValidNumber 檢查，以便提供更早的自定義錯誤訊息
+    if (!isValidNumber(value)) {
+      return '錯誤：輸入的數值格式無效。';
     }
 
     // 將輸入值轉換為 Wei (基本單位)
+    // ethers 的 parseUnits 會處理數字格式、溢出等問題
     const valueInWei = parseUnits(value, unitDecimals[fromUnit]);
 
     // 將 Wei 轉換為目標單位
     return formatUnits(valueInWei, unitDecimals[toUnit]);
-  } catch (error) {
-    // 處理可能的錯誤（例如：無效輸入）
+  } catch (error: unknown) {
+    // 處理可能的錯誤（例如：無效輸入、數值過大等）
     console.error('Unit conversion error:', error);
-    return '轉換錯誤';
+
+    // Type guard to check if error is an object with potential properties
+    if (typeof error === 'object' && error !== null) {
+      // Check for ethers.js specific error structure (or similar)
+      const potentialError = error as { code?: string; fault?: string; message?: string }; // Type assertion after check
+
+      if (potentialError.code === 'INVALID_ARGUMENT') {
+        return '錯誤：輸入的數值格式無效或包含不支援的字符。';
+      }
+      if (potentialError.code === 'NUMERIC_FAULT' && potentialError.fault === 'overflow') {
+        return `錯誤：數值過大，無法處理。`;
+      }
+      // Optionally check error.message if needed
+      // if (potentialError.message) { ... }
+    }
+
+    // 其他未知錯誤或非物件錯誤
+    return '錯誤：轉換時發生未知問題。';
   }
 };
 

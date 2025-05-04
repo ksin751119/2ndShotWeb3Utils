@@ -1,17 +1,18 @@
 import React, { useState, useCallback } from 'react';
 import Card from './Card';
 import Input from './Input';
-import Button from './Button';
+import ConvertButton from './ConvertButton';
 import CopyButton from './CopyButton';
 import { publicKeyToAddress } from '../utils/addressUtils';
 import '../styles/tools.css';
+import { Alert, AlertDescription } from './ui/alert';
 
 export const PublicKeyToAddressConverter: React.FC = () => {
   const [publicKey, setPublicKey] = useState<string>('');
   const [derivedAddress, setDerivedAddress] = useState<string>('');
   const [error, setError] = useState<string>('');
 
-  const handleConvert = useCallback(() => {
+  const handleConvertAsync = useCallback(async (): Promise<void> => {
     setError('');
     setDerivedAddress('');
     const result = publicKeyToAddress(publicKey);
@@ -19,6 +20,7 @@ export const PublicKeyToAddressConverter: React.FC = () => {
       setError(result);
     } else {
       setDerivedAddress(result);
+      setError('');
     }
   }, [publicKey]);
 
@@ -33,27 +35,33 @@ export const PublicKeyToAddressConverter: React.FC = () => {
       <h2>公鑰到地址轉換器</h2>
       <p>從以太坊公鑰計算出對應的地址。</p>
 
-      <div className="form-group">
+      <div className="form-group mt-4">
         <label htmlFor="input-public-key">輸入公鑰</label>
         <Input
           id="input-public-key"
           placeholder="0x... (壓縮或非壓縮格式)"
           value={publicKey}
           onChange={handleInputChange}
-          error={!!error}
-          helperText={error}
         />
       </div>
 
-      <Button onClick={handleConvert} disabled={!publicKey}>計算地址</Button>
+      {error && (
+          <Alert variant="destructive" className="mt-2">
+              <AlertDescription>{error}</AlertDescription>
+          </Alert>
+      )}
 
-      {derivedAddress && (
-         <div className="result-container">
-           <label>計算出的地址 (EIP-55)</label>
-           <div className="flex items-center space-x-2 mt-1">
-             <p className="font-mono text-sm break-all flex-grow bg-gray-100 p-2 rounded">{derivedAddress}</p>
-             <CopyButton text={derivedAddress}>複製</CopyButton>
-           </div>
+      <div className="form-group mt-4">
+          <ConvertButton onConvert={handleConvertAsync} disabled={!publicKey || !!error}>
+              計算地址
+          </ConvertButton>
+      </div>
+
+      {derivedAddress && !error && (
+         <div className="result-container mt-4">
+           <h3>計算出的地址 (EIP-55)</h3>
+           <div className="result-value">{derivedAddress}</div>
+           <CopyButton text={derivedAddress}>複製</CopyButton>
          </div>
       )}
     </Card>

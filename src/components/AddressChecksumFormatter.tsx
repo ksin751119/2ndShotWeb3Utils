@@ -6,18 +6,19 @@ import Card from './Card';
 import Input from './Input';
 // import { Label } from './ui/label'; // Use standard label
 // import { Button } from './ui/button'; // Use standard button or check CopyButton's implementation
-import Button from './Button'; // Assuming custom Button exists
+import ConvertButton from './ConvertButton'; // Import ConvertButton
 import CopyButton from './CopyButton';
-// import { Alert, AlertDescription } from './ui/alert'; // Use simple text for error
 import { formatChecksumAddress } from '../utils/addressUtils';
 import '../styles/tools.css'; // Ensure CSS is imported
+import { Alert, AlertDescription } from './ui/alert'; // Import Alert
 
 export const AddressChecksumFormatter: React.FC = () => {
   const [inputAddress, setInputAddress] = useState<string>('');
   const [formattedAddress, setFormattedAddress] = useState<string>('');
   const [error, setError] = useState<string>('');
 
-  const handleFormat = useCallback(() => {
+  // Wrap the sync function for ConvertButton
+  const handleFormatAsync = useCallback(async (): Promise<void> => {
     setError('');
     setFormattedAddress('');
     const result = formatChecksumAddress(inputAddress);
@@ -25,27 +26,12 @@ export const AddressChecksumFormatter: React.FC = () => {
       setError(result);
     } else {
       setFormattedAddress(result);
+      setError(''); // Clear error on success
     }
   }, [inputAddress]);
 
-  // 可以選擇即時格式化，或者點擊按鈕格式化
-  // 這裡使用按鈕觸發
-  // const handleInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const addr = event.target.value;
-  //   setInputAddress(addr);
-  //   setError('');
-  //   const result = formatChecksumAddress(addr);
-  //    if (result.startsWith('錯誤：')) {
-  //      setError(result);
-  //      setFormattedAddress('');
-  //    } else {
-  //      setFormattedAddress(result);
-  //    }
-  // }, []);
-
   const handleInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
       setInputAddress(event.target.value);
-      // 清除之前的結果和錯誤，等待按鈕觸發
       setFormattedAddress('');
       setError('');
   }, []);
@@ -58,7 +44,7 @@ export const AddressChecksumFormatter: React.FC = () => {
       <p>將以太坊地址轉換為標準的 EIP-55 校驗和格式。</p>
 
       {/* Use form-group and standard label */}
-      <div className="form-group">
+      <div className="form-group mt-4"> {/* Add margin */}
         <label htmlFor="input-address">輸入地址</label>
         {/* Use custom Input */}
         <Input
@@ -66,22 +52,29 @@ export const AddressChecksumFormatter: React.FC = () => {
           placeholder="0x..."
           value={inputAddress}
           onChange={handleInputChange}
-          error={!!error} // Pass boolean for error state
-          helperText={error} // Pass error string as helper text
         />
       </div>
 
-      {/* Use custom Button - check if Button component exists and props */}
-       <Button onClick={handleFormat} disabled={!inputAddress}>格式化地址</Button>
+      {/* Display Error Alert */}
+      {error && (
+          <Alert variant="destructive" className="mt-2"> {/* Add margin */}
+              <AlertDescription>{error}</AlertDescription>
+          </Alert>
+      )}
 
-      {/* Display result in a div, similar to BaseConverter's copy buttons */}
-      {formattedAddress && (
-        <div className="result-container"> {/* Optional: Use result-container class? */}
-           <label>格式化地址 (EIP-55)</label>
-           <div className="flex items-center space-x-2 mt-1"> {/* Basic flex layout */}
-             <p className="font-mono text-sm break-all flex-grow bg-gray-100 p-2 rounded">{formattedAddress}</p>
-             <CopyButton text={formattedAddress}>複製</CopyButton>
-           </div>
+      {/* Use ConvertButton */}
+       <div className="form-group mt-4"> {/* Add margin */}
+           <ConvertButton onConvert={handleFormatAsync} disabled={!inputAddress || !!error}>
+               格式化地址
+           </ConvertButton>
+       </div>
+
+      {/* Result Display - Use result-container and result-value */}
+      {formattedAddress && !error && (
+        <div className="result-container mt-4"> {/* Use class, add margin */}
+           <h3>格式化地址 (EIP-55)</h3> {/* Use H3 */}
+           <div className="result-value">{formattedAddress}</div> {/* Use class */}
+           <CopyButton text={formattedAddress}>複製</CopyButton>
         </div>
       )}
     </Card>
