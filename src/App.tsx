@@ -8,6 +8,7 @@ import DevTools from './pages/DevTools';
 import NotFound from './pages/NotFound';
 import FormDemo from './pages/FormDemo';
 import ButtonDemo from './pages/ButtonDemo';
+import ToastDemo from './pages/ToastDemo';
 
 function App(): React.ReactElement {
   return (
@@ -21,6 +22,7 @@ function App(): React.ReactElement {
           <Route path="/dev-tools" element={<DevTools />} />
           <Route path="/form-demo" element={<FormDemo />} />
           <Route path="/button-demo" element={<ButtonDemo />} />
+          <Route path="/toast-demo" element={<ToastDemo />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>
