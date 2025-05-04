@@ -1,6 +1,6 @@
 # Task ID: 8
 # Title: JSON Parser Development
-# Status: pending
+# Status: done
 # Dependencies: 3
 # Priority: low
 # Description: Create a tool for formatting and validating JSON

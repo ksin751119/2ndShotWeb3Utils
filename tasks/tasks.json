@@ -288,7 +288,7 @@
       "id": 8,
       "title": "JSON Parser Development",
       "description": "Create a tool for formatting and validating JSON",
-      "status": "pending",
+      "status": "done",
       "dependencies": [
         3
       ],
