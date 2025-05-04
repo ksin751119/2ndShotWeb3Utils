@@ -1,6 +1,7 @@
 import React from 'react';
 import { AddressChecksumFormatter } from '../components/AddressChecksumFormatter';
 import { PublicKeyToAddressConverter } from '../components/PublicKeyToAddressConverter';
+import { AddressGenerator } from '../components/AddressGenerator';
 
 const AddressTools: React.FC = () => {
     return (
@@ -8,6 +9,7 @@ const AddressTools: React.FC = () => {
             {/* 後續可以加入更多地址相關工具 */}
             <AddressChecksumFormatter />
             <PublicKeyToAddressConverter />
+            <AddressGenerator />
         </div>
     );
 };

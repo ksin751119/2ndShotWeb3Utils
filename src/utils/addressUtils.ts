@@ -65,3 +65,23 @@ export const publicKeyToAddress = (publicKey: string): string => {
     return '錯誤：計算地址時發生非預期錯誤。';
   }
 };
+
+/**
+ * 生成一個新的以太坊金鑰對（私鑰、公鑰、地址）。
+ * **警告:** 在瀏覽器環境中生成私鑰存在安全風險。
+ * @returns 包含 privateKey, publicKey, address 的物件。
+ */
+export const generateEthereumKeyPair = (): { privateKey: string; publicKey: string; address: string } => {
+  try {
+    const wallet = ethers.Wallet.createRandom();
+    const privateKey = wallet.privateKey;
+    const publicKey = wallet.publicKey; // 非壓縮格式
+    const address = wallet.address; // EIP-55 格式
+
+    return { privateKey, publicKey, address };
+  } catch (error) {
+    console.error("Error generating key pair:", error); // 記錄內部錯誤
+    // 對於此函數，我們拋出一個更通用的錯誤，讓 UI 層處理顯示
+    throw new Error('生成金鑰對時發生錯誤，請重試。');
+  }
+};
