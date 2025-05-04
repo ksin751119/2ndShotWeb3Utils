@@ -21,9 +21,9 @@ const Card: React.FC<CardProps> = ({ header, footer, children, style, className 
         ...style,
       }}
     >
-      {header && <div style={{ marginBottom: 16, fontWeight: 600, fontSize: '1.15rem' }}>{header}</div>}
+      {header != null && <div style={{ marginBottom: 16, fontWeight: 600, fontSize: '1.15rem' }}>{header}</div>}
       <div>{children}</div>
-      {footer && <div style={{ marginTop: 16 }}>{footer}</div>}
+      {footer != null && <div style={{ marginTop: 16 }}>{footer}</div>}
     </div>
   );
 };

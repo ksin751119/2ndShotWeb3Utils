@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import NumberInput from './NumberInput';
 import Card from './Card';
 import ConvertButton from './ConvertButton';
@@ -39,7 +39,7 @@ const EthUnitConverter: React.FC = () => {
   };
 
   // 執行轉換
-  const handleConvert = async (): Promise<void> => {
+  const handleConvert = useCallback(async (): Promise<void> => {
     if (!isValid || !inputValue) {
       setResult('');
       return;
@@ -52,14 +52,14 @@ const EthUnitConverter: React.FC = () => {
       console.error('Conversion error:', error);
       setResult('轉換錯誤');
     }
-  };
+  }, [inputValue, fromUnit, toUnit, isValid]);
 
   // 自動轉換（當輸入或單位改變時）
   useEffect(() => {
     if (isValid && inputValue) {
       void handleConvert();
     }
-  }, [inputValue, fromUnit, toUnit]);
+  }, [handleConvert, isValid, inputValue]);
 
   return (
     <Card>
