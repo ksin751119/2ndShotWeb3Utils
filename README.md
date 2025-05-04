@@ -1,46 +1,65 @@
-# Getting Started with Create React App
+# Web3 Utils Toolbox
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A frontend application containing various helper tools commonly used in Web3 development.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+The toolbox currently includes the following categories:
 
-### `npm start`
+### Number Tools (`/number-tools`)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+*   **ETH Unit Converter:** Convert values between different Ethereum units (e.g., Wei, Gwei, Ether).
+*   **Base Converter:** Convert numbers between common numeral systems (Hexadecimal, Decimal, Binary).
+*   **BigNumber Calculator:** Evaluate mathematical expressions involving large numbers, supporting common operators and parentheses (uses math.js with BigNumber configuration).
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Time Tools (`/time-tools`)
 
-### `npm test`
+*   **Timestamp Converter:** Convert Unix timestamps (in seconds or milliseconds) to a human-readable date and time string in the Taipei timezone.
+*   **Block Time Querier:** Enter a block number to query the corresponding Unix timestamp and Taipei time (requires connection to the Ethereum mainnet).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Address Tools (`/address-tools`)
 
-### `npm run build`
+*   **Address Checksum Formatter:** Convert an Ethereum address to the standard EIP-55 checksum format.
+*   **Public Key to Address Converter:** Compute the corresponding EIP-55 address from an Ethereum public key (compressed or uncompressed).
+*   **Address Generator:** Generate a new random Ethereum key pair (private key, public key, address) with relevant security warnings.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Tech Stack
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+*   React
+*   TypeScript
+*   ethers.js (for address and block-related operations)
+*   math.js (for BigNumber calculations)
+*   sonner (for Toast notifications)
+*   @radix-ui/react-tooltip (for Tooltips)
+*   Potentially some shadcn/ui components (e.g., Alert, Checkbox)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Local Setup & Running
 
-### `npm run eject`
+1.  **Clone the repository:**
+    ```bash
+    git clone <repository-url>
+    cd Web3Utils
+    ```
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+3.  **Start the development server:**
+    ```bash
+    npm run dev
+    # Or, if using the default CRA script:
+    # npm start
+    ```
+    > **Note:** Use the correct command based on your `package.json` scripts.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+4.  **Open your browser:** Visit `http://localhost:3000` (or the port specified in your terminal output).
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Future Work (Based on Task List)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+*   Implement a comprehensive testing suite (Task 10.1)
+*   Optimize application performance (Task 10.2)
+*   Create more detailed user documentation / in-app help (Task 10.3)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+---
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+*This README.md was generated with AI assistance.*
