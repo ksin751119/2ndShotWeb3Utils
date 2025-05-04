@@ -25,7 +25,7 @@ const Input: React.FC<InputProps> = ({
   ...rest
 }) => {
   return (
-    <div style={{ marginBottom: '1.2rem' }}>
+    <>
       <input
         value={value}
         onChange={onChange}
@@ -52,7 +52,7 @@ const Input: React.FC<InputProps> = ({
           {helperText}
         </div>
       )}
-    </div>
+    </>
   );
 };
 
