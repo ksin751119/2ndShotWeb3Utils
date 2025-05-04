@@ -1,13 +1,13 @@
 import React, { useState, useCallback } from 'react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input'; // Assuming generic Input might be needed, or use NumberInput if available
-import { Button } from '@/components/ui/button';
-import CopyButton from '@/components/CopyButton'; // To this (default import)
-import { isValidTimestampString, convertTimestampToTaipeiString, isValidBlockNumberString, getBlockTimestamp } from '@/utils/timeConverter'; // Using alias for utils
-import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2 } from 'lucide-react'; // Keep this as lucide-react is a package
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from './ui/card';
+import { Input } from './ui/input';
+import { Button } from './ui/button';
+import CopyButton from './CopyButton';
+import { isValidTimestampString, convertTimestampToTaipeiString, isValidBlockNumberString, getBlockTimestamp } from '../utils/timeConverter';
+import { Label } from './ui/label';
+import { Separator } from './ui/separator';
+import { Alert, AlertDescription } from './ui/alert';
+import { Loader2 } from 'lucide-react';
 
 export const TimeConverters: React.FC = () => {
   // State for Timestamp to Date Converter

@@ -1,4 +1,4 @@
-import { ethers, Block } from 'ethers';
+import { ethers } from 'ethers';
 
 /**
  * 驗證輸入是否為有效的 Unix 時間戳字串 (純數字)
