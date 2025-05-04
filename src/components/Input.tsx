@@ -1,6 +1,6 @@
 import React from 'react';
 
-export interface InputProps {
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
@@ -22,6 +22,7 @@ const Input: React.FC<InputProps> = ({
   helperText,
   name,
   autoComplete,
+  ...rest
 }) => {
   return (
     <div style={{ marginBottom: '1.2rem' }}>
@@ -44,6 +45,7 @@ const Input: React.FC<InputProps> = ({
           color: '#222',
           boxSizing: 'border-box',
         }}
+        {...rest}
       />
       {helperText !== undefined && helperText !== null && helperText !== '' && (
         <div style={{ color: error ? '#e53935' : '#888', fontSize: '0.92rem', marginTop: 4 }}>
