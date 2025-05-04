@@ -33,3 +33,35 @@ export const formatChecksumAddress = (address: string): string => {
     return '錯誤：格式化地址時發生非預期錯誤。';
   }
 };
+
+/**
+ * 從以太坊公鑰計算出對應的地址。
+ * @param publicKey - 公鑰字串 (可以包含 0x 前綴，可以是壓縮或非壓縮格式)。
+ * @returns 格式化後的 EIP-55 地址字串；如果公鑰無效，則返回錯誤訊息字串。
+ */
+export const publicKeyToAddress = (publicKey: string): string => {
+  if (!publicKey || publicKey.trim() === '') {
+    return ''; // 允許空輸入
+  }
+  try {
+    // ethers.computeAddress 會處理壓縮/非壓縮格式並返回 checksum 地址
+    const address = ethers.computeAddress(publicKey.trim());
+    // 雖然 computeAddress 返回的就是 checksum 格式，但為了明確，可以再調用一次
+    // return formatChecksumAddress(address); // 或者直接返回 computeAddress 的結果
+    return address; // computeAddress 本身就返回 EIP-55 格式
+  } catch (error: unknown) {
+    // console.error("Invalid public key:", error);
+     if (typeof error === 'object' && error !== null) {
+        const ethersError = error as { code?: string; argument?: string; message?: string };
+        // 檢查是否為 ethers.js 的特定錯誤
+        if (ethersError.code === 'INVALID_ARGUMENT' && (ethersError.argument === 'pubKey' || ethersError.argument === 'key')) {
+             return '錯誤：無效的公鑰格式或長度。';
+        }
+        const errorMessage = typeof ethersError.message === 'string' && ethersError.message.length > 0
+                            ? ethersError.message
+                            : '計算地址時發生未知錯誤';
+        return `錯誤：${errorMessage}`;
+    }
+    return '錯誤：計算地址時發生非預期錯誤。';
+  }
+};
