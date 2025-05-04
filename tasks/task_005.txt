@@ -1,0 +1,78 @@
+# Task ID: 5
+# Title: Number Tools - Base Converter and Big Number Calculator
+# Status: done
+# Dependencies: 4
+# Priority: medium
+# Description: Implement the base conversion and big number calculation tools
+# Details:
+Develop the Base Converter tool supporting Hex/Decimal/Binary conversions. Implement the Big Number Calculator supporting operations within uint256 range. Use ethers.js BigNumber for calculations to ensure precision. Create intuitive interfaces for both tools with proper input validation. Implement error handling for invalid inputs and out-of-range values. Add copy functionality for results.
+
+# Test Strategy:
+Test base conversions with various input formats. Verify big number calculations with edge cases (max uint256, zero values). Test error handling for invalid inputs and boundary conditions.
+
+# Subtasks:
+## 1. Implement Base Converter with Hex/Decimal/Binary Support [done]
+### Dependencies: None
+### Description: Create a base converter component that allows users to convert between hexadecimal, decimal, and binary number systems with validation and error handling
+### Details:
+Implementation steps:
+1. Create a BaseConverter component with input fields for each base type (hex, decimal, binary)
+2. Implement conversion logic using JavaScript's built-in methods (parseInt, toString) for base conversion
+3. Add input validation to ensure valid characters for each base (0-9, A-F for hex; 0-9 for decimal; 0-1 for binary)
+4. Implement real-time conversion as the user types in any field
+5. Add error handling for invalid inputs (display error messages)
+6. Implement a copy button for each result field
+7. Style the component with clear labels and intuitive layout
+
+Testing approach:
+- Test conversion accuracy with various inputs including edge cases (very small/large numbers)
+- Test validation by entering invalid characters for each base
+- Test copy functionality works correctly
+- Test error handling displays appropriate messages
+
+## 2. Implement Big Number Calculator with Basic Operations [done]
+### Dependencies: None
+### Description: Create a calculator component that handles large numbers within uint256 range using ethers.js BigNumber library with basic arithmetic operations
+### Details:
+Implementation steps:
+1. Set up ethers.js BigNumber library in the project
+2. Create a BigNumberCalculator component with input fields for operands and operation selection
+3. Implement basic arithmetic operations (addition, subtraction, multiplication, division)
+4. Add validation to ensure inputs are valid numbers within uint256 range
+5. Implement error handling for invalid inputs and out-of-range results
+6. Display calculation results with proper formatting
+7. Add a copy button for the result
+
+Testing approach:
+- Test each operation with various number sizes including edge cases
+- Test with very large numbers approaching uint256 limits
+- Test error handling for out-of-range results
+- Test validation rejects invalid inputs
+- Test copy functionality works correctly
+
+## 3. Integrate Tools and Enhance UI/UX [done]
+### Dependencies: 5.1, 5.2
+### Description: Integrate both tools into a cohesive interface, add advanced features, and enhance the overall user experience
+### Details:
+Implementation steps:
+1. Create a unified interface that houses both tools with tabs or sections
+2. Add advanced features to the Base Converter:
+   - Support for additional bases (octal, base64, etc.)
+   - Ability to handle larger numbers using BigNumber
+3. Add advanced features to the Big Number Calculator:
+   - Support for bitwise operations
+   - Modular arithmetic
+   - Exponentiation
+4. Implement persistent state to remember user's last inputs
+5. Add tooltips and help text to explain functionality
+6. Implement responsive design for mobile compatibility
+7. Add visual feedback for operations (loading states, success indicators)
+8. Implement keyboard shortcuts for common operations
+
+Testing approach:
+- Test integration of both tools works seamlessly
+- Test advanced features with various inputs
+- Test responsive design on different screen sizes
+- Test keyboard shortcuts function correctly
+- Conduct usability testing to ensure intuitive interface
+

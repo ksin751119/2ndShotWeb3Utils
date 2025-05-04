@@ -1,0 +1,143 @@
+# Overview
+Web3 Utils 是一個專為 Solidity 合約工程師設計的開發工具集網站。這個工具集旨在簡化日常智能合約開發過程中的各種轉換和計算工作，提供一個簡潔、高效的界面來處理常見的開發任務。
+
+# Core Features
+1. Number Tools（數值工具集）
+   - Unit Converter：支援 Etherscan 同等的以太幣單位轉換
+   - Base Converter：支援 Hex/Decimal/Binary 進位轉換
+   - Big Number Calculator：支援 uint256 範圍的數值計算
+
+2. Time Tools（時間工具集）
+   - Timestamp to Date：Unix timestamp 轉 Taipei 時間
+   - Timestamp/Block Number 互換工具
+
+3. Address Tools（地址工具集）
+   - Address Checksum Formatter
+   - Public Key to Address Converter
+   - Ethereum Address Generator
+
+4. Dev Tools（開發工具集）
+   - JSON Parser：提供 JSON 格式化功能
+
+# User Experience
+- 簡潔的黑白配色（70% 白色、30% 黑色）
+- 左側固定導航欄設計
+- 統一的轉換按鈕（"Convert"）
+- 一鍵複製功能（帶成功提示）
+- 清晰的錯誤提示系統
+
+# Technical Architecture
+
+## System Components
+1. Frontend Framework
+   - React + TypeScript
+   - ethers.js v6 for blockchain interactions
+   - ESLint for code standardization
+
+2. Project Structure
+   ```
+   src/
+     ├── components/    # 共用組件
+     ├── pages/        # 功能頁面
+     ├── utils/        # 工具函數
+     └── services/     # ethers.js 服務
+   ```
+
+3. Core Components
+   - Layout System
+   - Error Handling
+   - Copy Button
+   - Input Validation
+
+## Development Roadmap
+
+### Phase 1: Foundation
+- Project initialization
+- Core components development
+- Basic layout implementation
+- Error handling system
+
+### Phase 2: Basic Tools
+- Number Tools implementation
+- JSON Parser development
+- Basic UI/UX implementation
+
+### Phase 3: Blockchain Tools
+- Time Tools development
+- Address Tools implementation
+- Testing and optimization
+
+### Phase 4: Polish
+- Error handling enhancement
+- Performance optimization
+- Cross-browser testing
+- Documentation
+
+## Logical Dependency Chain
+
+1. Foundation First
+   - Project setup
+   - Core components
+   - Basic layout
+   - Navigation system
+
+2. Simple Tools First
+   - Unit Converter
+   - Base Converter
+   - JSON Parser
+   - Big Number Calculator
+
+3. Blockchain Integration
+   - Time/Block tools
+   - Address tools
+   - Public key conversion
+
+4. Enhancement
+   - Error handling
+   - Testing
+   - Optimization
+
+## Risks and Mitigations
+
+### Technical Challenges
+1. Big Number Precision
+   - Risk: JavaScript number precision limitations
+   - Mitigation: Use ethers.js BigNumber
+
+2. Blockchain Data Accuracy
+   - Risk: Block/time estimation accuracy
+   - Mitigation: Provide estimation ranges
+
+3. Browser Compatibility
+   - Risk: Cross-browser issues
+   - Mitigation: Modern polyfills and testing
+
+### Implementation Risks
+1. User Experience
+   - Risk: Tool complexity
+   - Mitigation: Clear instructions and examples
+
+2. Error Handling
+   - Risk: Technical error messages
+   - Mitigation: User-friendly error displays
+
+## Appendix
+
+### Technical Specifications
+1. Frontend
+   - React 18+
+   - TypeScript 5+
+   - ethers.js v6
+   - ESLint configuration
+
+2. Development Standards
+   - Modular component design
+   - Consistent error handling
+   - Unified styling approach
+   - TypeScript strict mode
+
+3. Testing Requirements
+   - Unit tests for core logic
+   - UI component testing
+   - Cross-browser compatibility
+   - Large number handling tests

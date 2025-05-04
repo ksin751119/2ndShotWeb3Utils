@@ -1,0 +1,76 @@
+# Task ID: 6
+# Title: Time Tools Implementation
+# Status: done
+# Dependencies: 3
+# Priority: medium
+# Description: Develop timestamp conversion and block number tools
+# Details:
+Implement the Timestamp to Date converter (Unix timestamp to Taipei time). Create the Timestamp/Block Number converter tool. Use ethers.js to interact with blockchain for block information. Implement proper date formatting and timezone handling for Taipei time. Add validation for timestamp and block number inputs. Provide clear error messages for invalid inputs or network issues.
+
+# Test Strategy:
+Test timestamp conversions with various inputs. Verify block number conversions against known blockchain data. Test timezone handling for Taipei time. Verify error handling for network issues and invalid inputs.
+
+# Subtasks:
+## 1. Implement Unix Timestamp to Taipei Time Converter [done]
+### Dependencies: None
+### Description: Create a utility function that converts Unix timestamps to human-readable dates in Taipei timezone with proper formatting and validation
+### Details:
+Implementation steps:
+1. Create a utility function `convertTimestampToDate(timestamp)` that takes a Unix timestamp as input
+2. Add input validation to check if the timestamp is a valid number and within reasonable range
+3. Use JavaScript's Date object with the timestamp (multiplied by 1000 if in seconds)
+4. Implement timezone handling for Taipei time (UTC+8) using either:
+   - Native Date methods with timezone offset calculations
+   - A library like date-fns or moment-timezone
+5. Format the date in a user-friendly format (YYYY-MM-DD HH:MM:SS Taipei Time)
+6. Add proper error handling with clear error messages for invalid inputs
+7. Write unit tests to verify conversion accuracy, timezone handling, and error cases
+8. Test with various timestamps including edge cases (very old/future dates)
+
+## 2. Implement Block Number to Timestamp Converter [done]
+### Dependencies: 6.1
+### Description: Create a utility function that fetches blockchain data to convert block numbers to timestamps using ethers.js
+### Details:
+Implementation steps:
+1. Set up ethers.js connection to an Ethereum provider (Infura, Alchemy, or other)
+2. Create an async function `getBlockTimestamp(blockNumber)` that takes a block number as input
+3. Add validation to ensure the block number is a positive integer
+4. Use ethers.js to fetch the block information: `provider.getBlock(blockNumber)`
+5. Extract the timestamp from the block data
+6. Integrate with the timestamp converter from subtask 1 to display the block time in Taipei timezone
+7. Implement proper error handling for:
+   - Network connection issues
+   - Invalid block numbers
+   - Non-existent blocks
+8. Add loading states for the async operation
+9. Write tests using mocked ethers provider to verify functionality
+10. Test with real blockchain data for various block numbers
+
+## 3. Create Timestamp/Block Number Converter UI and Integration [done]
+### Dependencies: 6.1, 6.2
+### Description: Develop the user interface for both conversion tools and integrate the utility functions with proper error handling and user feedback
+### Details:
+Implementation steps:
+1. Create a UI component with two conversion sections:
+   - Timestamp to Date converter
+   - Block Number to Timestamp/Date converter
+2. For the Timestamp converter:
+   - Add input field for Unix timestamp
+   - Add a convert button
+   - Display the converted date in Taipei time
+   - Show validation errors for invalid inputs
+3. For the Block Number converter:
+   - Add input field for block number
+   - Add a convert button
+   - Display the block timestamp and corresponding date in Taipei time
+   - Show loading indicator during blockchain queries
+   - Display appropriate error messages for failed queries
+4. Implement bidirectional conversion (optional enhancement):
+   - Allow users to input a date and get the corresponding Unix timestamp
+   - Allow users to input a timestamp and find the nearest block number
+5. Add copy-to-clipboard functionality for conversion results
+6. Ensure the UI is responsive and user-friendly
+7. Add comprehensive error handling with user-friendly messages
+8. Test the complete integration with various inputs including edge cases
+9. Perform usability testing to ensure the tool is intuitive
+

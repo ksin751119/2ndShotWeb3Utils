@@ -1,0 +1,11 @@
+# Task ID: 4
+# Title: Number Tools - Unit Converter Implementation
+# Status: done
+# Dependencies: 3
+# Priority: high
+# Description: Develop the Ethereum unit converter tool
+# Details:
+Implement the Unit Converter tool that supports Ethereum unit conversions (Wei, Gwei, Ether, etc.) similar to Etherscan. Use ethers.js utilities for accurate conversions. Create a form interface with input field, unit selection dropdowns, and convert button. Implement validation for numeric inputs and handle large numbers properly using BigNumber from ethers.js. Add copy functionality for results.
+
+# Test Strategy:
+Test conversion accuracy with various input values. Verify handling of very large and very small numbers. Test input validation and error handling for invalid inputs.

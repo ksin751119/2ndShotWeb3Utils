@@ -1,0 +1,368 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Project Setup and Configuration",
+      "description": "Initialize the React + TypeScript project with required dependencies and configuration files",
+      "status": "done",
+      "dependencies": [],
+      "priority": "high",
+      "details": "Create a new project using Create React App with TypeScript template. Install dependencies: ethers.js v6, ESLint, and other necessary packages. Configure ESLint with TypeScript strict mode. Set up the basic project structure with folders for components, pages, utils, and services as specified in the PRD. Initialize Git repository and create initial commit.",
+      "testStrategy": "Verify all dependencies are correctly installed. Ensure the project builds without errors. Confirm ESLint is properly configured with TypeScript rules.",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Initialize React TypeScript Project with Create React App",
+          "description": "Set up the base React project with TypeScript template using Create React App and initialize Git repository",
+          "dependencies": [],
+          "details": "1. Install the latest version of Node.js and npm if not already installed\n2. Run `npx create-react-app my-app --template typescript` to create a new React project with TypeScript\n3. Navigate to the project directory with `cd my-app`\n4. Initialize Git repository with `git init`\n5. Create a `.gitignore` file with appropriate entries for node_modules, build directories, and environment files\n6. Make an initial commit with `git add .` and `git commit -m \"Initial project setup with Create React App\"`\n7. Test the setup by running `npm start` to ensure the development server works correctly",
+          "status": "done",
+          "parentTaskId": 1
+        },
+        {
+          "id": 2,
+          "title": "Install Dependencies and Configure ESLint",
+          "description": "Add required project dependencies including ethers.js v6 and set up ESLint with TypeScript strict mode",
+          "dependencies": [
+            1
+          ],
+          "details": "1. Install ethers.js v6 with `npm install ethers@6`\n2. Install ESLint and TypeScript ESLint packages: `npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react eslint-plugin-react-hooks`\n3. Create an `.eslintrc.js` configuration file with TypeScript strict mode settings:\n```js\nmodule.exports = {\n  parser: '@typescript-eslint/parser',\n  parserOptions: {\n    ecmaVersion: 2020,\n    sourceType: 'module',\n    ecmaFeatures: {\n      jsx: true\n    }\n  },\n  settings: {\n    react: {\n      version: 'detect'\n    }\n  },\n  extends: [\n    'plugin:react/recommended',\n    'plugin:@typescript-eslint/recommended',\n    'plugin:react-hooks/recommended'\n  ],\n  rules: {\n    '@typescript-eslint/strict-boolean-expressions': 'error',\n    '@typescript-eslint/no-explicit-any': 'error',\n    '@typescript-eslint/explicit-module-boundary-types': 'error'\n  }\n};\n```\n4. Add ESLint scripts to package.json: `\"lint\": \"eslint src --ext .ts,.tsx\"`\n5. Test the ESLint configuration by running `npm run lint`",
+          "status": "done",
+          "parentTaskId": 1
+        },
+        {
+          "id": 3,
+          "title": "Create Project Folder Structure",
+          "description": "Set up the basic project structure with folders for components, pages, utils, and services as specified in the PRD",
+          "dependencies": [
+            1,
+            2
+          ],
+          "details": "1. Create the following directory structure in the `src` folder:\n```\nsrc/\n  ├── components/\n  │   └── .gitkeep\n  ├── pages/\n  │   └── .gitkeep\n  ├── utils/\n  │   └── .gitkeep\n  ├── services/\n  │   └── .gitkeep\n  ├── types/\n  │   └── index.ts\n  ├── assets/\n  │   └── .gitkeep\n  └── styles/\n      └── .gitkeep\n```\n2. Create a basic `index.ts` file in the types directory with placeholder type definitions\n3. Update the App.tsx file to use the new folder structure\n4. Update import paths in existing files to match the new structure\n5. Test the application structure by running `npm start` to ensure everything still works\n6. Commit the changes with `git add .` and `git commit -m \"Set up project folder structure\"`",
+          "status": "done",
+          "parentTaskId": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Core Layout and Navigation Implementation",
+      "description": "Develop the main layout structure with left-side navigation and black/white theme",
+      "status": "done",
+      "dependencies": [
+        1
+      ],
+      "priority": "high",
+      "details": "Create a responsive layout component with a fixed left-side navigation bar. Implement the black and white color scheme (70% white, 30% black) using CSS variables for theming. Design navigation links for all tool categories (Number Tools, Time Tools, Address Tools, Dev Tools). Implement basic routing using React Router. Create placeholder pages for each tool to be developed later.",
+      "testStrategy": "Test responsive behavior across different screen sizes. Verify navigation links correctly route to placeholder pages. Ensure the layout adheres to the specified color scheme.",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Create responsive layout with CSS theming variables",
+          "description": "Implement the core layout structure with CSS variables for the black/white theme",
+          "dependencies": [],
+          "details": "1. Create a Layout component with a fixed left sidebar and main content area\n2. Define CSS variables for theming (--primary-color, --secondary-color, --text-color, --background-color)\n3. Implement the 70% white, 30% black color scheme using these variables\n4. Make the layout responsive with media queries for different screen sizes\n5. Add CSS for sidebar collapse on smaller screens\n6. Test the layout on different viewport sizes to ensure responsiveness\n7. Verify that the theme colors are applied correctly throughout the layout",
+          "status": "done",
+          "parentTaskId": 2
+        },
+        {
+          "id": 2,
+          "title": "Implement navigation menu structure and styling",
+          "description": "Build the left-side navigation with all tool categories and styling",
+          "dependencies": [
+            1
+          ],
+          "details": "1. Create a Navigation component to be placed in the sidebar\n2. Design and implement navigation links for all tool categories (Number Tools, Time Tools, Address Tools, Dev Tools)\n3. Add appropriate icons for each navigation category\n4. Style the navigation links using the theme variables from subtask 1\n5. Implement hover and active states for navigation items\n6. Add collapsible sections for each tool category if they contain multiple tools\n7. Test navigation styling in both expanded and collapsed sidebar states\n8. Ensure navigation is accessible with proper ARIA attributes",
+          "status": "done",
+          "parentTaskId": 2
+        },
+        {
+          "id": 3,
+          "title": "Set up React Router with placeholder pages",
+          "description": "Configure routing and create placeholder pages for all tool categories",
+          "dependencies": [
+            1,
+            2
+          ],
+          "details": "1. Install and configure React Router\n2. Create a routes configuration file mapping paths to components\n3. Implement the Router component in the app's entry point\n4. Create placeholder page components for each tool category (NumberTools, TimeTools, AddressTools, DevTools)\n5. Add a 404 Not Found page for undefined routes\n6. Connect the Navigation component from subtask 2 with React Router links\n7. Test all navigation links to ensure they route to the correct placeholder pages\n8. Verify that the active link in the navigation is highlighted correctly",
+          "status": "done",
+          "parentTaskId": 2
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Shared Components Development",
+      "description": "Create reusable components for consistent UI elements across the application",
+      "status": "done",
+      "dependencies": [
+        2
+      ],
+      "priority": "high",
+      "details": "Develop reusable components: 1) Input fields with validation, 2) Convert button component, 3) Copy button with success notification, 4) Error message display component, 5) Card/container components for tool interfaces. Ensure components are typed with TypeScript and follow a consistent design pattern. Implement basic error handling utilities that can be used across all tools.",
+      "testStrategy": "Create unit tests for each component. Verify components render correctly and handle edge cases. Test error states and success notifications.",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Create Form Input Components with Validation",
+          "description": "Develop reusable input field components with built-in validation capabilities that can be used across the application",
+          "dependencies": [],
+          "details": "Implementation details:\n1. Create a base Input component that accepts common props like value, onChange, placeholder, disabled, etc.\n2. Implement specialized input variants (TextInput, NumberInput, EmailInput, etc.) that extend the base component\n3. Develop a validation system that supports:\n   - Required field validation\n   - Type-specific validation (email format, number ranges, etc.)\n   - Custom validation rules via prop\n4. Add visual feedback for validation states (error, success, warning)\n5. Include helper/error text display below inputs\n6. Ensure all components are properly typed with TypeScript interfaces\n7. Create comprehensive tests for each input type and validation scenario\n8. Document usage examples and available props\n\nTesting approach:\n- Unit test each input type with various validation scenarios\n- Test accessibility compliance\n- Test component rendering in different states (default, focused, error, disabled)",
+          "status": "done",
+          "parentTaskId": 3
+        },
+        {
+          "id": 2,
+          "title": "Implement Action Button Components",
+          "description": "Create reusable button components for common actions including Convert and Copy functionality with appropriate feedback mechanisms",
+          "dependencies": [
+            1
+          ],
+          "details": "Implementation details:\n1. Create a base Button component with variants (primary, secondary, text, etc.)\n2. Implement a specialized ConvertButton component that:\n   - Handles loading states during conversion\n   - Provides visual feedback on completion\n   - Can be disabled based on form validation state\n3. Develop a CopyButton component that:\n   - Copies content to clipboard\n   - Shows success notification/toast when copy is successful\n   - Handles copy failures gracefully\n4. Ensure all buttons have proper hover, focus, and active states\n5. Make buttons fully accessible with keyboard navigation support\n6. Create TypeScript interfaces for all component props\n7. Add appropriate icon support for buttons\n\nTesting approach:\n- Unit test button rendering in different states\n- Test click handlers and callback functions\n- Test clipboard functionality for CopyButton\n- Test loading state transitions for ConvertButton\n- Verify accessibility compliance",
+          "status": "done",
+          "parentTaskId": 3
+        },
+        {
+          "id": 3,
+          "title": "Develop Container and Error Handling Components",
+          "description": "Create card/container components for tool interfaces and implement reusable error handling components and utilities",
+          "dependencies": [
+            1,
+            2
+          ],
+          "details": "Implementation details:\n1. Create Card/Container components:\n   - Implement a flexible Card component with header, body, and footer sections\n   - Add styling options (padding, elevation, borders, etc.)\n   - Create specialized variants for different tool interfaces\n2. Develop error handling components:\n   - Create an ErrorMessage component for inline errors\n   - Implement an ErrorBoundary component to catch and display runtime errors\n   - Develop a Toast/Notification system for temporary messages\n3. Create utility functions for error handling:\n   - Error formatting helpers\n   - Common error detection patterns\n   - Error logging utilities\n4. Ensure consistent styling across all components\n5. Document usage patterns and integration examples\n6. Create TypeScript interfaces and types for error objects\n\nTesting approach:\n- Test container components with various content and configurations\n- Test error components with different error scenarios\n- Verify error boundary functionality catches and displays errors properly\n- Test toast notification system for proper display and dismissal\n- Verify consistent styling across all components",
+          "status": "done",
+          "parentTaskId": 3
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Number Tools - Unit Converter Implementation",
+      "description": "Develop the Ethereum unit converter tool",
+      "status": "done",
+      "dependencies": [
+        3
+      ],
+      "priority": "high",
+      "details": "Implement the Unit Converter tool that supports Ethereum unit conversions (Wei, Gwei, Ether, etc.) similar to Etherscan. Use ethers.js utilities for accurate conversions. Create a form interface with input field, unit selection dropdowns, and convert button. Implement validation for numeric inputs and handle large numbers properly using BigNumber from ethers.js. Add copy functionality for results.",
+      "testStrategy": "Test conversion accuracy with various input values. Verify handling of very large and very small numbers. Test input validation and error handling for invalid inputs."
+    },
+    {
+      "id": 5,
+      "title": "Number Tools - Base Converter and Big Number Calculator",
+      "description": "Implement the base conversion and big number calculation tools",
+      "status": "done",
+      "dependencies": [
+        4
+      ],
+      "priority": "medium",
+      "details": "Develop the Base Converter tool supporting Hex/Decimal/Binary conversions. Implement the Big Number Calculator supporting operations within uint256 range. Use ethers.js BigNumber for calculations to ensure precision. Create intuitive interfaces for both tools with proper input validation. Implement error handling for invalid inputs and out-of-range values. Add copy functionality for results.",
+      "testStrategy": "Test base conversions with various input formats. Verify big number calculations with edge cases (max uint256, zero values). Test error handling for invalid inputs and boundary conditions.",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Implement Base Converter with Hex/Decimal/Binary Support",
+          "description": "Create a base converter component that allows users to convert between hexadecimal, decimal, and binary number systems with validation and error handling",
+          "dependencies": [],
+          "details": "Implementation steps:\n1. Create a BaseConverter component with input fields for each base type (hex, decimal, binary)\n2. Implement conversion logic using JavaScript's built-in methods (parseInt, toString) for base conversion\n3. Add input validation to ensure valid characters for each base (0-9, A-F for hex; 0-9 for decimal; 0-1 for binary)\n4. Implement real-time conversion as the user types in any field\n5. Add error handling for invalid inputs (display error messages)\n6. Implement a copy button for each result field\n7. Style the component with clear labels and intuitive layout\n\nTesting approach:\n- Test conversion accuracy with various inputs including edge cases (very small/large numbers)\n- Test validation by entering invalid characters for each base\n- Test copy functionality works correctly\n- Test error handling displays appropriate messages",
+          "status": "done",
+          "parentTaskId": 5
+        },
+        {
+          "id": 2,
+          "title": "Implement Big Number Calculator with Basic Operations",
+          "description": "Create a calculator component that handles large numbers within uint256 range using ethers.js BigNumber library with basic arithmetic operations",
+          "dependencies": [],
+          "details": "Implementation steps:\n1. Set up ethers.js BigNumber library in the project\n2. Create a BigNumberCalculator component with input fields for operands and operation selection\n3. Implement basic arithmetic operations (addition, subtraction, multiplication, division)\n4. Add validation to ensure inputs are valid numbers within uint256 range\n5. Implement error handling for invalid inputs and out-of-range results\n6. Display calculation results with proper formatting\n7. Add a copy button for the result\n\nTesting approach:\n- Test each operation with various number sizes including edge cases\n- Test with very large numbers approaching uint256 limits\n- Test error handling for out-of-range results\n- Test validation rejects invalid inputs\n- Test copy functionality works correctly",
+          "status": "done",
+          "parentTaskId": 5
+        },
+        {
+          "id": 3,
+          "title": "Integrate Tools and Enhance UI/UX",
+          "description": "Integrate both tools into a cohesive interface, add advanced features, and enhance the overall user experience",
+          "dependencies": [
+            1,
+            2
+          ],
+          "details": "Implementation steps:\n1. Create a unified interface that houses both tools with tabs or sections\n2. Add advanced features to the Base Converter:\n   - Support for additional bases (octal, base64, etc.)\n   - Ability to handle larger numbers using BigNumber\n3. Add advanced features to the Big Number Calculator:\n   - Support for bitwise operations\n   - Modular arithmetic\n   - Exponentiation\n4. Implement persistent state to remember user's last inputs\n5. Add tooltips and help text to explain functionality\n6. Implement responsive design for mobile compatibility\n7. Add visual feedback for operations (loading states, success indicators)\n8. Implement keyboard shortcuts for common operations\n\nTesting approach:\n- Test integration of both tools works seamlessly\n- Test advanced features with various inputs\n- Test responsive design on different screen sizes\n- Test keyboard shortcuts function correctly\n- Conduct usability testing to ensure intuitive interface",
+          "status": "done",
+          "parentTaskId": 5
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Time Tools Implementation",
+      "description": "Develop timestamp conversion and block number tools",
+      "status": "done",
+      "dependencies": [
+        3
+      ],
+      "priority": "medium",
+      "details": "Implement the Timestamp to Date converter (Unix timestamp to Taipei time). Create the Timestamp/Block Number converter tool. Use ethers.js to interact with blockchain for block information. Implement proper date formatting and timezone handling for Taipei time. Add validation for timestamp and block number inputs. Provide clear error messages for invalid inputs or network issues.",
+      "testStrategy": "Test timestamp conversions with various inputs. Verify block number conversions against known blockchain data. Test timezone handling for Taipei time. Verify error handling for network issues and invalid inputs.",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Implement Unix Timestamp to Taipei Time Converter",
+          "description": "Create a utility function that converts Unix timestamps to human-readable dates in Taipei timezone with proper formatting and validation",
+          "dependencies": [],
+          "details": "Implementation steps:\n1. Create a utility function `convertTimestampToDate(timestamp)` that takes a Unix timestamp as input\n2. Add input validation to check if the timestamp is a valid number and within reasonable range\n3. Use JavaScript's Date object with the timestamp (multiplied by 1000 if in seconds)\n4. Implement timezone handling for Taipei time (UTC+8) using either:\n   - Native Date methods with timezone offset calculations\n   - A library like date-fns or moment-timezone\n5. Format the date in a user-friendly format (YYYY-MM-DD HH:MM:SS Taipei Time)\n6. Add proper error handling with clear error messages for invalid inputs\n7. Write unit tests to verify conversion accuracy, timezone handling, and error cases\n8. Test with various timestamps including edge cases (very old/future dates)",
+          "status": "done",
+          "parentTaskId": 6
+        },
+        {
+          "id": 2,
+          "title": "Implement Block Number to Timestamp Converter",
+          "description": "Create a utility function that fetches blockchain data to convert block numbers to timestamps using ethers.js",
+          "dependencies": [
+            1
+          ],
+          "details": "Implementation steps:\n1. Set up ethers.js connection to an Ethereum provider (Infura, Alchemy, or other)\n2. Create an async function `getBlockTimestamp(blockNumber)` that takes a block number as input\n3. Add validation to ensure the block number is a positive integer\n4. Use ethers.js to fetch the block information: `provider.getBlock(blockNumber)`\n5. Extract the timestamp from the block data\n6. Integrate with the timestamp converter from subtask 1 to display the block time in Taipei timezone\n7. Implement proper error handling for:\n   - Network connection issues\n   - Invalid block numbers\n   - Non-existent blocks\n8. Add loading states for the async operation\n9. Write tests using mocked ethers provider to verify functionality\n10. Test with real blockchain data for various block numbers",
+          "status": "done",
+          "parentTaskId": 6
+        },
+        {
+          "id": 3,
+          "title": "Create Timestamp/Block Number Converter UI and Integration",
+          "description": "Develop the user interface for both conversion tools and integrate the utility functions with proper error handling and user feedback",
+          "dependencies": [
+            1,
+            2
+          ],
+          "details": "Implementation steps:\n1. Create a UI component with two conversion sections:\n   - Timestamp to Date converter\n   - Block Number to Timestamp/Date converter\n2. For the Timestamp converter:\n   - Add input field for Unix timestamp\n   - Add a convert button\n   - Display the converted date in Taipei time\n   - Show validation errors for invalid inputs\n3. For the Block Number converter:\n   - Add input field for block number\n   - Add a convert button\n   - Display the block timestamp and corresponding date in Taipei time\n   - Show loading indicator during blockchain queries\n   - Display appropriate error messages for failed queries\n4. Implement bidirectional conversion (optional enhancement):\n   - Allow users to input a date and get the corresponding Unix timestamp\n   - Allow users to input a timestamp and find the nearest block number\n5. Add copy-to-clipboard functionality for conversion results\n6. Ensure the UI is responsive and user-friendly\n7. Add comprehensive error handling with user-friendly messages\n8. Test the complete integration with various inputs including edge cases\n9. Perform usability testing to ensure the tool is intuitive",
+          "status": "done",
+          "parentTaskId": 6
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Address Tools Implementation",
+      "description": "Develop Ethereum address utilities",
+      "status": "pending",
+      "dependencies": [
+        3
+      ],
+      "priority": "medium",
+      "details": "Implement Address Checksum Formatter to format Ethereum addresses with proper checksum. Create Public Key to Address Converter using ethers.js cryptographic functions. Develop Ethereum Address Generator with private key generation and corresponding address display. Implement proper validation for all inputs. Add security warnings for address generation tool. Ensure copy functionality for generated addresses and keys.",
+      "testStrategy": "Verify checksum formatting against known examples. Test public key conversion with test vectors. Verify generated addresses follow Ethereum standards. Test error handling for invalid inputs.",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Implement Address Checksum Formatter",
+          "description": "Create a utility function that formats Ethereum addresses with proper EIP-55 checksum",
+          "dependencies": [],
+          "details": "Implementation steps:\n1. Create a new file `addressFormatter.js` in the utilities folder\n2. Implement a function `formatChecksumAddress(address)` that:\n   - Validates the input is a valid Ethereum address (40 hex chars)\n   - Converts the address to lowercase and removes '0x' prefix\n   - Calculates the keccak256 hash of the lowercase address\n   - Applies proper capitalization based on the hash values\n   - Returns the formatted address with '0x' prefix\n3. Add input validation with clear error messages\n4. Add a simple UI component with an input field and format button\n5. Include a copy-to-clipboard button for the formatted address\n\nTesting approach:\n- Test with various valid and invalid addresses\n- Verify output against known checksum addresses\n- Test edge cases like all zeros, mixed case inputs",
+          "status": "pending",
+          "parentTaskId": 7
+        },
+        {
+          "id": 2,
+          "title": "Develop Public Key to Address Converter",
+          "description": "Create a utility that converts Ethereum public keys to corresponding addresses",
+          "dependencies": [
+            1
+          ],
+          "details": "Implementation steps:\n1. Create a new file `publicKeyConverter.js` in the utilities folder\n2. Import ethers.js cryptographic functions\n3. Implement a function `publicKeyToAddress(publicKey)` that:\n   - Validates the input is a valid public key\n   - Removes '0x' prefix and any compression indicators if present\n   - Applies keccak256 hash to the public key\n   - Takes the last 20 bytes of the hash result\n   - Uses the checksum formatter from subtask 1 to format the result\n4. Create a UI component with public key input field and convert button\n5. Display the resulting address with proper checksum formatting\n6. Add a copy button for the generated address\n\nTesting approach:\n- Test with known public key/address pairs\n- Test with compressed and uncompressed public key formats\n- Verify error handling for invalid inputs",
+          "status": "pending",
+          "parentTaskId": 7
+        },
+        {
+          "id": 3,
+          "title": "Create Ethereum Address Generator with Security Features",
+          "description": "Develop a secure tool for generating Ethereum private keys and corresponding addresses",
+          "dependencies": [
+            1,
+            2
+          ],
+          "details": "Implementation steps:\n1. Create a new file `addressGenerator.js` in the utilities folder\n2. Implement a function `generateKeyPair()` that:\n   - Securely generates a random private key using ethers.js\n   - Derives the public key from the private key\n   - Uses the converter from subtask 2 to get the address\n   - Returns an object with private key, public key, and address\n3. Create a UI component with a generate button and result display\n4. Implement proper security warnings:\n   - Add clear warning about private key security\n   - Include notice about browser-based generation risks\n   - Recommend offline usage for sensitive operations\n5. Add copy buttons for private key, public key, and address\n6. Include an option to hide/show the private key\n7. Add a clear/reset button to remove sensitive data from screen\n\nTesting approach:\n- Verify that generated addresses match their private keys\n- Test the copy functionality for all fields\n- Ensure security warnings are prominently displayed\n- Verify that the UI properly hides sensitive information when requested",
+          "status": "pending",
+          "parentTaskId": 7
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "JSON Parser Development",
+      "description": "Create a tool for formatting and validating JSON",
+      "status": "pending",
+      "dependencies": [
+        3
+      ],
+      "priority": "low",
+      "details": "Implement a JSON Parser tool that formats and validates JSON input. Create a text area for JSON input and a display area for formatted output. Add options for indentation levels. Implement syntax highlighting if possible. Provide clear error messages for invalid JSON. Add copy functionality for formatted JSON.",
+      "testStrategy": "Test formatting with various JSON structures. Verify error handling with malformed JSON. Test performance with large JSON objects. Verify copy functionality works correctly."
+    },
+    {
+      "id": 9,
+      "title": "Error Handling Enhancement and UI Polish",
+      "description": "Improve error handling system and refine the user interface",
+      "status": "pending",
+      "dependencies": [
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "priority": "medium",
+      "details": "Enhance the error handling system across all tools. Implement user-friendly error messages that explain issues clearly. Add input validation improvements with real-time feedback. Polish UI elements for consistency across all tools. Ensure responsive design works well on all screen sizes. Refine copy functionality notifications. Implement loading states for operations that might take time.",
+      "testStrategy": "Conduct usability testing across all tools. Verify error messages are clear and helpful. Test responsive behavior on various devices. Ensure consistent UI experience throughout the application."
+    },
+    {
+      "id": 10,
+      "title": "Testing, Optimization and Documentation",
+      "description": "Perform comprehensive testing, optimize performance, and document the application",
+      "status": "pending",
+      "dependencies": [
+        9
+      ],
+      "priority": "medium",
+      "details": "Implement unit tests for core functionality. Perform cross-browser testing (Chrome, Firefox, Safari, Edge). Optimize performance, especially for big number operations. Implement code splitting for better load times. Add helpful tooltips and instructions for each tool. Create user documentation explaining each tool's purpose and usage. Perform final review of all features against PRD requirements.",
+      "testStrategy": "Run comprehensive test suite across all components. Measure and verify performance metrics. Test in multiple browsers and devices. Conduct final user acceptance testing against the PRD requirements.",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Implement Comprehensive Testing Suite",
+          "description": "Create and execute unit tests for core functionality and perform cross-browser compatibility testing",
+          "dependencies": [],
+          "details": "1. Set up a testing framework (Jest or similar) for the application\n2. Write unit tests for all core calculator functions (basic operations, scientific functions, number base conversions)\n3. Create integration tests for the UI components and their interactions\n4. Implement automated cross-browser testing using tools like Selenium or Cypress\n5. Test the application on Chrome, Firefox, Safari, and Edge\n6. Document all discovered bugs and issues in a tracking system\n7. Fix identified issues and verify fixes with regression testing\n8. Create a test report summarizing coverage and results\n\nTesting approach: Use a combination of automated tests for core functionality and manual testing for UI/UX verification. Ensure at least 80% code coverage for critical calculation functions.",
+          "status": "pending",
+          "parentTaskId": 10
+        },
+        {
+          "id": 2,
+          "title": "Optimize Application Performance",
+          "description": "Improve application performance focusing on big number operations and implement code splitting for better load times",
+          "dependencies": [
+            1
+          ],
+          "details": "1. Profile the application to identify performance bottlenecks, especially in big number operations\n2. Optimize the big number calculation algorithms by implementing caching or more efficient methods\n3. Implement code splitting to separate the application into smaller chunks that can be loaded on demand\n4. Configure webpack (or similar bundler) to create separate bundles for each calculator mode\n5. Implement lazy loading for non-essential components and features\n6. Add loading indicators for async operations\n7. Optimize asset loading (CSS, images) with proper caching strategies\n8. Measure and document performance improvements with before/after metrics\n\nTesting approach: Use Lighthouse or similar tools to measure performance metrics before and after optimization. Create performance tests for big number operations with large inputs to verify improvements.",
+          "status": "pending",
+          "parentTaskId": 10
+        },
+        {
+          "id": 3,
+          "title": "Create Documentation and Final Review",
+          "description": "Add user-facing documentation, tooltips, and perform final review against requirements",
+          "dependencies": [
+            1,
+            2
+          ],
+          "details": "1. Add contextual tooltips to all calculator buttons and functions explaining their purpose\n2. Create a comprehensive user guide explaining each calculator mode and its features\n3. Implement an in-app help section with usage instructions and examples\n4. Document keyboard shortcuts and accessibility features\n5. Create developer documentation including architecture overview and maintenance guidelines\n6. Review the entire application against the PRD requirements to ensure all features are implemented correctly\n7. Conduct a final usability review to identify any UX improvements\n8. Update the README.md with setup instructions, features list, and screenshots\n\nTesting approach: Conduct user testing with the documentation to ensure clarity and completeness. Create a requirements traceability matrix to verify all PRD items are implemented and documented.",
+          "status": "pending",
+          "parentTaskId": 10
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "projectName": "Web3 Utils Implementation",
+    "totalTasks": 10,
+    "sourceFile": "scripts/PRD.txt",
+    "generatedAt": "2023-11-09"
+  }
+}

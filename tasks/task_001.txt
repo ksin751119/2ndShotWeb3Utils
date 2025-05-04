@@ -1,0 +1,90 @@
+# Task ID: 1
+# Title: Project Setup and Configuration
+# Status: done
+# Dependencies: None
+# Priority: high
+# Description: Initialize the React + TypeScript project with required dependencies and configuration files
+# Details:
+Create a new project using Create React App with TypeScript template. Install dependencies: ethers.js v6, ESLint, and other necessary packages. Configure ESLint with TypeScript strict mode. Set up the basic project structure with folders for components, pages, utils, and services as specified in the PRD. Initialize Git repository and create initial commit.
+
+# Test Strategy:
+Verify all dependencies are correctly installed. Ensure the project builds without errors. Confirm ESLint is properly configured with TypeScript rules.
+
+# Subtasks:
+## 1. Initialize React TypeScript Project with Create React App [done]
+### Dependencies: None
+### Description: Set up the base React project with TypeScript template using Create React App and initialize Git repository
+### Details:
+1. Install the latest version of Node.js and npm if not already installed
+2. Run `npx create-react-app my-app --template typescript` to create a new React project with TypeScript
+3. Navigate to the project directory with `cd my-app`
+4. Initialize Git repository with `git init`
+5. Create a `.gitignore` file with appropriate entries for node_modules, build directories, and environment files
+6. Make an initial commit with `git add .` and `git commit -m "Initial project setup with Create React App"`
+7. Test the setup by running `npm start` to ensure the development server works correctly
+
+## 2. Install Dependencies and Configure ESLint [done]
+### Dependencies: 1.1
+### Description: Add required project dependencies including ethers.js v6 and set up ESLint with TypeScript strict mode
+### Details:
+1. Install ethers.js v6 with `npm install ethers@6`
+2. Install ESLint and TypeScript ESLint packages: `npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react eslint-plugin-react-hooks`
+3. Create an `.eslintrc.js` configuration file with TypeScript strict mode settings:
+```js
+module.exports = {
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 2020,
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true
+    }
+  },
+  settings: {
+    react: {
+      version: 'detect'
+    }
+  },
+  extends: [
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react-hooks/recommended'
+  ],
+  rules: {
+    '@typescript-eslint/strict-boolean-expressions': 'error',
+    '@typescript-eslint/no-explicit-any': 'error',
+    '@typescript-eslint/explicit-module-boundary-types': 'error'
+  }
+};
+```
+4. Add ESLint scripts to package.json: `"lint": "eslint src --ext .ts,.tsx"`
+5. Test the ESLint configuration by running `npm run lint`
+
+## 3. Create Project Folder Structure [done]
+### Dependencies: 1.1, 1.2
+### Description: Set up the basic project structure with folders for components, pages, utils, and services as specified in the PRD
+### Details:
+1. Create the following directory structure in the `src` folder:
+```
+src/
+  ├── components/
+  │   └── .gitkeep
+  ├── pages/
+  │   └── .gitkeep
+  ├── utils/
+  │   └── .gitkeep
+  ├── services/
+  │   └── .gitkeep
+  ├── types/
+  │   └── index.ts
+  ├── assets/
+  │   └── .gitkeep
+  └── styles/
+      └── .gitkeep
+```
+2. Create a basic `index.ts` file in the types directory with placeholder type definitions
+3. Update the App.tsx file to use the new folder structure
+4. Update import paths in existing files to match the new structure
+5. Test the application structure by running `npm start` to ensure everything still works
+6. Commit the changes with `git add .` and `git commit -m "Set up project folder structure"`
+

@@ -1,0 +1,82 @@
+# Task ID: 7
+# Title: Address Tools Implementation
+# Status: pending
+# Dependencies: 3
+# Priority: medium
+# Description: Develop Ethereum address utilities
+# Details:
+Implement Address Checksum Formatter to format Ethereum addresses with proper checksum. Create Public Key to Address Converter using ethers.js cryptographic functions. Develop Ethereum Address Generator with private key generation and corresponding address display. Implement proper validation for all inputs. Add security warnings for address generation tool. Ensure copy functionality for generated addresses and keys.
+
+# Test Strategy:
+Verify checksum formatting against known examples. Test public key conversion with test vectors. Verify generated addresses follow Ethereum standards. Test error handling for invalid inputs.
+
+# Subtasks:
+## 1. Implement Address Checksum Formatter [pending]
+### Dependencies: None
+### Description: Create a utility function that formats Ethereum addresses with proper EIP-55 checksum
+### Details:
+Implementation steps:
+1. Create a new file `addressFormatter.js` in the utilities folder
+2. Implement a function `formatChecksumAddress(address)` that:
+   - Validates the input is a valid Ethereum address (40 hex chars)
+   - Converts the address to lowercase and removes '0x' prefix
+   - Calculates the keccak256 hash of the lowercase address
+   - Applies proper capitalization based on the hash values
+   - Returns the formatted address with '0x' prefix
+3. Add input validation with clear error messages
+4. Add a simple UI component with an input field and format button
+5. Include a copy-to-clipboard button for the formatted address
+
+Testing approach:
+- Test with various valid and invalid addresses
+- Verify output against known checksum addresses
+- Test edge cases like all zeros, mixed case inputs
+
+## 2. Develop Public Key to Address Converter [pending]
+### Dependencies: 7.1
+### Description: Create a utility that converts Ethereum public keys to corresponding addresses
+### Details:
+Implementation steps:
+1. Create a new file `publicKeyConverter.js` in the utilities folder
+2. Import ethers.js cryptographic functions
+3. Implement a function `publicKeyToAddress(publicKey)` that:
+   - Validates the input is a valid public key
+   - Removes '0x' prefix and any compression indicators if present
+   - Applies keccak256 hash to the public key
+   - Takes the last 20 bytes of the hash result
+   - Uses the checksum formatter from subtask 1 to format the result
+4. Create a UI component with public key input field and convert button
+5. Display the resulting address with proper checksum formatting
+6. Add a copy button for the generated address
+
+Testing approach:
+- Test with known public key/address pairs
+- Test with compressed and uncompressed public key formats
+- Verify error handling for invalid inputs
+
+## 3. Create Ethereum Address Generator with Security Features [pending]
+### Dependencies: 7.1, 7.2
+### Description: Develop a secure tool for generating Ethereum private keys and corresponding addresses
+### Details:
+Implementation steps:
+1. Create a new file `addressGenerator.js` in the utilities folder
+2. Implement a function `generateKeyPair()` that:
+   - Securely generates a random private key using ethers.js
+   - Derives the public key from the private key
+   - Uses the converter from subtask 2 to get the address
+   - Returns an object with private key, public key, and address
+3. Create a UI component with a generate button and result display
+4. Implement proper security warnings:
+   - Add clear warning about private key security
+   - Include notice about browser-based generation risks
+   - Recommend offline usage for sensitive operations
+5. Add copy buttons for private key, public key, and address
+6. Include an option to hide/show the private key
+7. Add a clear/reset button to remove sensitive data from screen
+
+Testing approach:
+- Verify that generated addresses match their private keys
+- Test the copy functionality for all fields
+- Ensure security warnings are prominently displayed
+- Verify that the UI properly hides sensitive information when requested
+

@@ -1,0 +1,51 @@
+# Task ID: 2
+# Title: Core Layout and Navigation Implementation
+# Status: done
+# Dependencies: 1
+# Priority: high
+# Description: Develop the main layout structure with left-side navigation and black/white theme
+# Details:
+Create a responsive layout component with a fixed left-side navigation bar. Implement the black and white color scheme (70% white, 30% black) using CSS variables for theming. Design navigation links for all tool categories (Number Tools, Time Tools, Address Tools, Dev Tools). Implement basic routing using React Router. Create placeholder pages for each tool to be developed later.
+
+# Test Strategy:
+Test responsive behavior across different screen sizes. Verify navigation links correctly route to placeholder pages. Ensure the layout adheres to the specified color scheme.
+
+# Subtasks:
+## 1. Create responsive layout with CSS theming variables [done]
+### Dependencies: None
+### Description: Implement the core layout structure with CSS variables for the black/white theme
+### Details:
+1. Create a Layout component with a fixed left sidebar and main content area
+2. Define CSS variables for theming (--primary-color, --secondary-color, --text-color, --background-color)
+3. Implement the 70% white, 30% black color scheme using these variables
+4. Make the layout responsive with media queries for different screen sizes
+5. Add CSS for sidebar collapse on smaller screens
+6. Test the layout on different viewport sizes to ensure responsiveness
+7. Verify that the theme colors are applied correctly throughout the layout
+
+## 2. Implement navigation menu structure and styling [done]
+### Dependencies: 2.1
+### Description: Build the left-side navigation with all tool categories and styling
+### Details:
+1. Create a Navigation component to be placed in the sidebar
+2. Design and implement navigation links for all tool categories (Number Tools, Time Tools, Address Tools, Dev Tools)
+3. Add appropriate icons for each navigation category
+4. Style the navigation links using the theme variables from subtask 1
+5. Implement hover and active states for navigation items
+6. Add collapsible sections for each tool category if they contain multiple tools
+7. Test navigation styling in both expanded and collapsed sidebar states
+8. Ensure navigation is accessible with proper ARIA attributes
+
+## 3. Set up React Router with placeholder pages [done]
+### Dependencies: 2.1, 2.2
+### Description: Configure routing and create placeholder pages for all tool categories
+### Details:
+1. Install and configure React Router
+2. Create a routes configuration file mapping paths to components
+3. Implement the Router component in the app's entry point
+4. Create placeholder page components for each tool category (NumberTools, TimeTools, AddressTools, DevTools)
+5. Add a 404 Not Found page for undefined routes
+6. Connect the Navigation component from subtask 2 with React Router links
+7. Test all navigation links to ensure they route to the correct placeholder pages
+8. Verify that the active link in the navigation is highlighted correctly
+
