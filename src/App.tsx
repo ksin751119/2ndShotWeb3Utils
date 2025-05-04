@@ -1,25 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from './components/Layout';
+import NumberTools from './pages/NumberTools';
+import TimeTools from './pages/TimeTools';
+import AddressTools from './pages/AddressTools';
+import DevTools from './pages/DevTools';
+import NotFound from './pages/NotFound';
 
 function App(): React.ReactElement {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<h1>歡迎使用 2ndShot Web3 Utils</h1>} />
+          <Route path="/number-tools" element={<NumberTools />} />
+          <Route path="/time-tools" element={<TimeTools />} />
+          <Route path="/address-tools" element={<AddressTools />} />
+          <Route path="/dev-tools" element={<DevTools />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
   );
 }
 
