@@ -1,0 +1,12 @@
+我要想做一個身為一個 ethereum solidity contract engineer 用的工具網站，想要使用 ethersv6(https://docs.ethers.org/v6/) 來實作
+想要的功能如下。網站風格以黑白為主，分頁切換，簡單的設計即可。
+- unit convert: 可以做 decimal 的轉換, like 1 ether = 1000000000000000000 wei, 1 GWei = 0.000000001 ether
+- address to checksum: 輸入 ethereum address 自動轉成 checksum 的格式
+- 大數加減乘除：可以做到大數計算，應用場景是 ethereum 的單位計算
+- pubkey to address:  輸入 pubkey 轉換成 ethereum address
+- 進位轉換：像是 hex, decimal, binary 的進位互換
+- address generator: 自動產生 ethereum address and private key
+- timestamp to date: 做 timestamp to local time （taipei time）的轉換
+- timestamp to blocknumber：做給定 tiemstamp 可以計算出大約的 block number
+- blocknumber to timestamp：給 block number 可以計算出他的 timestamp 是多少
+- json parse：做一個可以自動 preitter json 的網頁
