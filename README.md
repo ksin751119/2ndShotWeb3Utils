@@ -68,3 +68,7 @@ The toolbox currently includes the following categories:
 ---
 
 *This README.md was generated with AI assistance.*
+
+## Implementation Note
+
+This project was implemented using [Claude Task Master](https://github.com/eyaltoledano/claude-task-master/blob/main/docs/tutorial.md), with no manual coding involved in the development process. All code, features, and documentation were automatically generated and implemented by the AI assistant based on the requirements.
